@@ -10,7 +10,7 @@ class MainBlock extends Component {
         <div className="button-wrapper">
           <Button >OK</Button>
         </div>
-
+        <List />
       </div>
     );
   }

@@ -5,9 +5,9 @@ class Button extends Component {
 
 
   render() {
-
+    const {cls} = this.props;
     return (
-      <button>{this.props.children}</button>
+      <button className={cls}>{this.props.children}</button>
     );
   }
 }
