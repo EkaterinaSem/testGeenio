@@ -55,10 +55,10 @@ class List extends Component {
 
   render() {
     const {users} = this.state;
-    console.log(users)
+    console.log(users.total_count);
     return (
       <div className="list-wrapper">
-        {users.users ? <Users users={users.users} /> :
+        {users.total_count > 0 ? <Users users={users.users} /> :
           List.renderEmptyBlock()
         }
       </div>

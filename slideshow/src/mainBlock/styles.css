@@ -3,6 +3,17 @@
   height: 700px;
   margin: 40px auto;
   position: relative;
-  background: #f7f7f7;
   border-radius: 10px;
+}
+.head-wrapper{
+  padding: 20px;
+  border: 1px solid #dddddd;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  background: #f7f7f7;
+}
+
+.button-wrapper{
+  text-align: left;
 }
