@@ -57,7 +57,7 @@ class List extends Component {
     const {users} = this.state;
     console.log(users.total_count);
     return (
-      <div className="list-wrapper">
+      <div className={`list-wrapper ${users.total_count === 0 && 'empty'}`}>
         {users.total_count > 0 ? <Users users={users.users} /> :
           List.renderEmptyBlock()
         }

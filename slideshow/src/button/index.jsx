@@ -6,10 +6,12 @@ class Button extends Component {
 
   render() {
     const {cls, onClick, disabled} = this.props;
+    const className = `${cls} ${disabled && 'disabled'}`;
+
     return (
       <button
         onClick={onClick}
-        className={cls}
+        className={className}
         disabled={disabled}
       >{this.props.children}
       </button>

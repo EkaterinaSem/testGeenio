@@ -9,3 +9,11 @@
     padding: 20px;
     border: 1px solid #dddddd;
 }
+
+.list-wrapper.empty{
+    height: auto;
+}
+
+.empty-block{
+    padding: 30px 100px;
+}

@@ -12,24 +12,16 @@ class MainBlock extends Component {
       isAddNew: false,
     };
 
-    this.onClickAdd = this.onClickAdd.bind(this);
-  }
-
-  getChildContext() {
-    return {
-      toggleIsAddNew: this.toggleIsAddNew,
-    };
+    //this.onClickAdd = this.onClickAdd.bind(this);
+    this.onClickCancel = this.onClickCancel.bind(this);
+    this.toggleIsAddNew = this.toggleIsAddNew.bind(this);
+    //this.onClickAddNew = this.onClickAddNew.bind(this);
   }
 
   toggleIsAddNew() {
+    console.log('toggle')
     this.setState({
       isAddNew: !this.state.isAddNew,
-    })
-  }
-
-  onClickAdd() {
-    this.setState({
-      isAddNew: true,
     })
   }
 
@@ -39,21 +31,23 @@ class MainBlock extends Component {
     })
   }
 
+
   render() {
     const {isAddNew} = this.state;
-    console.log(isAddNew)
+
     return (
       <div className="main">
         <div className="head-wrapper">
           <div className="button-wrapper">
             <Button
               disabled={isAddNew}
-              onClick={this.onClickAdd}
+              onClick={this.toggleIsAddNew}
             >Add new user
             </Button>
           </div>
           {isAddNew && <AddNew
-            onClickCancel={this.onClickCancel}
+            onClickCancelButton={this.toggleIsAddNew}
+            onClickAddButton={this.toggleIsAddNew}
           />}
         </div>
         <List />

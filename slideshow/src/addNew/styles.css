@@ -14,7 +14,12 @@ input, textarea{
     -moz-border-radius: 3px;
     border-radius: 3px;
     border-width: 1px;
-    border-color: #bbbbbb;
+    border: none;
+    box-shadow: 0 0 0 1px #bbbbbb;
+}
+
+textarea{
+    width: 400px;
 }
 
 input:focus,
