@@ -34,3 +34,8 @@ body, *{
   margin: 0;
   padding: 0;
 }
+
+@font-face{
+  font-family: 'Open Sans';
+  src: url('fonts/OpenSans/open-sans.ttf') format("truetype");
+}

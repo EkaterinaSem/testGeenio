@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './styles.css';
 import Button from '../button';
+import $ from "jquery";
 
 class AddNew extends Component {
 
@@ -20,23 +21,34 @@ class AddNew extends Component {
     this.onPhoneChange = this.onPhoneChange.bind(this);
     this.onAboutChange = this.onAboutChange.bind(this);
     this.onClickAddNew = this.onClickAddNew.bind(this);
+    this.createUser = this.createUser.bind(this);
+  }
+
+  createUser() {
+   return $.ajax({
+         method: `POST`,
+         crossDomain: true,
+         url: `https://geenio-test-job.herokuapp.com/api/v1/users?api_key=DVEXd6WRcc69cvXI`,
+         data: this.state,
+       });
   }
 
   onClickAddNew() {
-    const {onClickAddButton} = this.props;
+    const {onClickAddButton, uploadAfterCreate} = this.props;
     onClickAddButton();
-
+    this.createUser();
+    uploadAfterCreate(this.state);
   }
 
   onNameChange(event) {
     this.setState({
-      ['first-name']: event.target.value,
+      ['first_name']: event.target.value,
     })
   }
 
   onLastNameChange(event) {
     this.setState({
-      ['last-name']: event.target.value,
+      ['last_name']: event.target.value,
     })
   }
 

@@ -1,27 +1,17 @@
 import React, { Component } from 'react';
 import './styles.css';
-import $ from "jquery";
 import Users from '../users';
 
 
 class List extends Component {
 
-  constructor (props) {
-    super(props);
-    this.state = this.initialState();
-  }
-
-  initialState() {
-    return {users: []};
-  }
-
-  getAllUsers() {
-    return $.ajax({
-      method:   `GET`,
-      crossDomain: true,
-      url:      `https://geenio-test-job.herokuapp.com/api/v1/users?api_key=DVEXd6WRcc69cvXI`,
-      dataType: `json`,
-    });
+  //getAllUsers() {
+  //  return $.ajax({
+   //   method:   `GET`,
+   //   crossDomain: true,
+   //   url:      `https://geenio-test-job.herokuapp.com/api/v1/users?api_key=DVEXd6WRcc69cvXI`,
+   //   dataType: `json`,
+   // });
 
     // var data = {
     //   api_key: 'DVEXd6WRcc69cvXI',
@@ -39,7 +29,7 @@ class List extends Component {
     //     console.log('success')
     //   }
     // })
-  }
+ //}
 
   static renderEmptyBlock(){
     return (
@@ -49,12 +39,8 @@ class List extends Component {
     )
   }
 
-  componentWillMount() {
-    return this.getAllUsers().then(users => this.setState({ users }));
-  }
-
   render() {
-    const {users} = this.state;
+    const {users} = this.props;
     console.log(users.total_count);
     return (
       <div className={`list-wrapper ${users.total_count === 0 && 'empty'}`}>

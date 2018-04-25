@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './styles.css';
 import Button from '../button';
+import UserRow from './userRow';
 
 class Users extends Component {
 
@@ -36,7 +37,8 @@ class Users extends Component {
           <div className="list-data about">Прочее</div>
           <div className="list-data "/>
         </div>
-        { this.renderUsersList() }
+        { users.map((user, key) => <UserRow user={user} key={key} />) }
+
       </div>
     );
   }
