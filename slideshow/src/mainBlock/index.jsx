@@ -22,6 +22,26 @@ class MainBlock extends Component {
     this.uploadAfterCreate = this.uploadAfterCreate.bind(this);
   }
 
+  getChildContext() {
+    return {
+      updateAfterDelete: this.updateAfterDelete,
+    };
+  }
+
+  updateAfterDelete(id) {
+    const newCompetenceGroups = this.state.competenceGroups.map((group) => {
+      return {
+        ...group,
+        competences: group.competences.filter((competence) => {
+          return competence.id !== competenceId;
+        })
+      }
+    });
+    this.setState({
+      competenceGroups: newCompetenceGroups
+    });
+  }
+
   toggleIsAddNew() {
     console.log('toggle')
     this.setState({
@@ -35,7 +55,7 @@ class MainBlock extends Component {
     })
   }
 
- getAllUsers() {
+  getAllUsers() {
     return $.ajax({
       method:   `GET`,
       crossDomain: true,
@@ -45,28 +65,29 @@ class MainBlock extends Component {
     .then((data) =>
         this.setState({
             users: data
-        })
-    );
+        }));
   }
-    componentWillMount () {
-        this.setState({
-            users: this.getAllUsers(),
-        });
-    }
 
-    uploadAfterCreate(user) {
-        const usersList = this.state.users.users;
-        usersList.push(user);
-        this.setState({
-            users: {
-                users: usersList,
-            }
-        });
-    }
+  componentWillMount () {
+    this.setState({
+           users: this.getAllUsers(),
+    });
+  }
+
+  uploadAfterCreate(user) {
+    this.getAllUsers();
+    // const usersList = this.state.users.users;
+    // usersList.push(user);
+    // this.setState({
+    //   users: {
+    //     users: usersList,
+    //     total_count: usersList.total_count ? usersList.usersList++ : 1,
+    //   }
+    // });
+  }
 
   render() {
     const {isAddNew, users} = this.state;
-       console.log('users ',this.state);
     return (
       <div className="main">
         <div className="head-wrapper">
@@ -88,5 +109,9 @@ class MainBlock extends Component {
     );
   }
 }
+
+MainBlock.childContextTypes = {
+  updateAfterDelete: React.PropTypes.func,
+};
 
 export default MainBlock;

@@ -5,18 +5,17 @@ import $ from "jquery";
 
 class UserRow extends Component {
 
-
-
-    onDelete() {
-        const {user: {id}} = this.props;
-        console.log('delete ', this.props)
-         return $.ajax({
-              method:   `DELETE`,
-              crossDomain: true,
-              url:      `https://geenio-test-job.herokuapp.com/api/v1/users/${id}?api_key=DVEXd6WRcc69cvXI`,
-              dataType: `json`,
-            });
-    }
+  onDelete() {
+    const {user: {id}} = this.props;
+    console.log('delete ', this.props)
+    return $.ajax({
+      method: `DELETE`,
+      crossDomain: true,
+      url: `https://geenio-test-job.herokuapp.com/api/v1/users/${id}?api_key=DVEXd6WRcc69cvXI`,
+      dataType: `json`,
+    });
+    this.context.updateAfterDelete(id);
+  }
 
   render() {
    const  { user } = this.props;
@@ -37,5 +36,9 @@ class UserRow extends Component {
     );
   }
 }
+
+UserRow.contextTypes = {
+  updateAfterDelete: React.PropTypes.func,
+};
 
 export default UserRow;

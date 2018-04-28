@@ -37,6 +37,7 @@ class AddNew extends Component {
     const {onClickAddButton, uploadAfterCreate} = this.props;
     onClickAddButton();
     this.createUser();
+    console.log('state ', this.state)
     uploadAfterCreate(this.state);
   }
 
