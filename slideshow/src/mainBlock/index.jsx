@@ -4,6 +4,7 @@ import Button from '../button';
 import List from '../list';
 import AddNew from '../addNew';
 import $ from "jquery";
+import PropTypes from 'prop-types';
 
 class MainBlock extends Component {
 
@@ -20,6 +21,7 @@ class MainBlock extends Component {
     this.getAllUsers = this.getAllUsers.bind(this);
     //this.onClickAddNew = this.onClickAddNew.bind(this);
     this.uploadAfterCreate = this.uploadAfterCreate.bind(this);
+    this.updateAfterDelete = this.updateAfterDelete.bind(this);
   }
 
   getChildContext() {
@@ -29,16 +31,15 @@ class MainBlock extends Component {
   }
 
   updateAfterDelete(id) {
-    const newCompetenceGroups = this.state.competenceGroups.map((group) => {
-      return {
-        ...group,
-        competences: group.competences.filter((competence) => {
-          return competence.id !== competenceId;
+    const {users} = this.state;
+    const newUsersList = {
+        total_count: users.total_count - 1,
+        users: users.users.filter((user) => {
+            return user.id !== id;
         })
-      }
-    });
+    };
     this.setState({
-      competenceGroups: newCompetenceGroups
+        users: newUsersList,
     });
   }
 
@@ -64,18 +65,19 @@ class MainBlock extends Component {
     })
     .then((data) =>
         this.setState({
-            users: data
+          users: data
         }));
   }
 
   componentWillMount () {
     this.setState({
-           users: this.getAllUsers(),
+      users: this.getAllUsers(),
     });
   }
 
   uploadAfterCreate(user) {
     this.getAllUsers();
+    //делаем перезагрузку списка. в противном случае не будет ID у нового юзера
     // const usersList = this.state.users.users;
     // usersList.push(user);
     // this.setState({
@@ -88,6 +90,7 @@ class MainBlock extends Component {
 
   render() {
     const {isAddNew, users} = this.state;
+    console.log('render main',this.state)
     return (
       <div className="main">
         <div className="head-wrapper">
@@ -111,7 +114,7 @@ class MainBlock extends Component {
 }
 
 MainBlock.childContextTypes = {
-  updateAfterDelete: React.PropTypes.func,
+  updateAfterDelete: PropTypes.func,
 };
 
 export default MainBlock;

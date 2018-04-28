@@ -43,31 +43,31 @@ class AddNew extends Component {
 
   onNameChange(event) {
     this.setState({
-      ['first_name']: event.target.value,
+      first_name: event.target.value,
     })
   }
 
   onLastNameChange(event) {
     this.setState({
-      ['last_name']: event.target.value,
+      last_name: event.target.value,
     })
   }
 
   onEmailChange(event) {
     this.setState({
-      ['email']: event.target.value,
+      email: event.target.value,
     })
   }
 
   onPhoneChange(event) {
     this.setState({
-      ['phone']: event.target.value,
+      phone: event.target.value,
     })
   }
 
   onAboutChange(event) {
     this.setState({
-      ['about']: event.target.value,
+      about: event.target.value,
     })
   }
 
@@ -77,37 +77,33 @@ class AddNew extends Component {
       <div>
         <div className="add-new-form">
           <div className="input-wrapper">
-            <div className="new-name">Имя</div>
             <input
               maxLength={255}
-              placeholder={'Введите имя'}
               onChange={this.onNameChange}
             />
+            <div className="placeholder new-name">Имя</div>
           </div>
           <div className="input-wrapper">
-            <div className="new-last-name">Фамилия</div>
             <input
               maxLength={255}
-              placeholder={'Введите фамилию'}
               onChange={this.onLastNameChange}
             />
+            <div className="placeholder new-last-name">Фамилия</div>
           </div>
           <div className="input-wrapper">
-            <div className="new-email">E-mail</div>
             <input
               maxLength={255}
-              placeholder={'Введите e-mail'}
               onChange={this.onEmailChange}
             />
+            <div className="placeholder new-email">E-mail</div>
           </div>
-          <div className="input-wrapper">
-            <div className="new-phone">Номер телефона</div>
+          <div className=" input-wrapper">
             <input
               type='number'
               maxLength={255}
-              placeholder={'Введите номер'}
               onChange={this.onPhoneChange}
             />
+            <div className="placeholder new-phone">Номер телефона</div>
           </div>
           <div className="input-wrapper">
             <div className="new-about">Прочее</div>

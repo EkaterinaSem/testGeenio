@@ -10,22 +10,43 @@ input, textarea{
     padding: 5px 10px;
     font: 14px 'Open Sans';
     outline: transparent;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    border-width: 1px;
     border: none;
-    box-shadow: 0 0 0 1px #bbbbbb;
+}
+
+input{
+    border-bottom: 1px solid #bbb;
+    background: transparent;
+    z-index: 10;
 }
 
 textarea{
     width: 400px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border-width: 1px;
+    box-shadow: 0 0 0 1px #bbbbbb;
 }
 
-input:focus,
+input:focus{
+    border-bottom-color: #858585;
+}
+
 textarea:focus{
     box-shadow: 0 0 2px 1px #276cc0;
     border-color: #276cc0
+}
+
+.placeholder{
+    position: absolute;
+    bottom: 3px;
+    color: #bbb;
+    transition: all .3s linear;
+}
+
+input:focus + .placeholder{
+    bottom: 30px;
+    font-size: 11px;
 }
 
 .add-new-form{
@@ -35,6 +56,7 @@ textarea:focus{
 .input-wrapper{
     margin-left: 15px;
     margin-top: 20px;
+    position: relative;
 }
 .input-wrapper:first-child,
 .input-wrapper:last-child{

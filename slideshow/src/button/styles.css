@@ -51,6 +51,22 @@ button.delete{
     background-size: 100% 100%;
 }
 
+button.save{
+    background: transparent url(../images/save-icon.svg) no-repeat center center;
+    width: 20px;
+    height: 20px;
+    border: none;
+    background-size: 100% 100%;
+}
+
+button.cancel{
+    background: transparent url(../images/cancel-icon.svg) no-repeat center center;
+    width: 20px;
+    height: 20px;
+    border: none;
+    background-size: 16px 16px;
+}
+
 button.disabled{
     cursor: default;
     opacity: .6;

@@ -41,7 +41,7 @@ class List extends Component {
 
   render() {
     const {users} = this.props;
-    console.log(users.total_count);
+    console.log('total count ',users.total_count);
     return (
       <div className={`list-wrapper ${users.total_count === 0 && 'empty'}`}>
         {users.total_count > 0 ? <Users users={users.users} /> :
