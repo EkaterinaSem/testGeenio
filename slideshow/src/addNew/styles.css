@@ -26,6 +26,7 @@ textarea{
     border-radius: 3px;
     border-width: 1px;
     box-shadow: 0 0 0 1px #bbbbbb;
+    background: transparent;
 }
 
 input:focus{
@@ -33,16 +34,10 @@ input:focus{
 }
 
 textarea:focus{
-    box-shadow: 0 0 2px 1px #276cc0;
-    border-color: #276cc0
+    box-shadow: 0 0 2px 1px #9a9a9a;
+    border-color: #9a9a9a
 }
 
-.placeholder{
-    position: absolute;
-    bottom: 3px;
-    color: #bbb;
-    transition: all .3s linear;
-}
 
 input:focus + .placeholder{
     bottom: 30px;
@@ -58,6 +53,20 @@ input:focus + .placeholder{
     margin-top: 20px;
     position: relative;
 }
+
+.placeholder{
+    position: absolute;
+    color: #bbb;
+    transition: all .3s linear;
+    bottom: 3px;
+}
+
+.input-wrapper.not-empty .placeholder{
+    bottom: 30px;
+    font-size: 11px;
+}
+
+
 .input-wrapper:first-child,
 .input-wrapper:last-child{
     margin-left: 0;

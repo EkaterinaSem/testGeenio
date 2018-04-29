@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './styles.css'
-import Button from '../button';
-import List from '../list';
-import AddNew from '../addNew';
+import Button from '../button/index';
+import List from '../list/index';
+import AddNew from '../addNew/index';
 import $ from "jquery";
 import PropTypes from 'prop-types';
 
@@ -75,9 +75,10 @@ class MainBlock extends Component {
       dataType: `json`,
     })
     .then((data) =>
-        this.setState({
-          users: data
-        }));
+      this.setState({
+        users: data
+      }));
+
   }
 
   componentWillMount () {
@@ -109,7 +110,7 @@ class MainBlock extends Component {
             <Button
               disabled={isAddNew}
               onClick={this.toggleIsAddNew}
-            >Add new user
+            >{'Add new user'}
             </Button>
           </div>
           {isAddNew && <AddNew

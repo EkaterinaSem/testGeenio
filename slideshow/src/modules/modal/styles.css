@@ -1,0 +1,15 @@
+.modal-container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    heigth: 100%;
+}
+
+.modal-wrapper{
+    width: 400px;
+    padding: 30px 40px;
+    font: 15px 'Open Sans';
+    background-color: #fff;
+    color: #000;
+}

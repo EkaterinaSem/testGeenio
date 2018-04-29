@@ -36,7 +36,21 @@ class UserRow extends Component {
   }
 
   onCancelEdit() {
-     this.toggleIsEdit();
+     this.setInitialState();
+  }
+
+  setInitialState() {
+    this.setState({
+      isEdit: false,
+      user: {
+        id: this.props.user.id,
+        first_name: this.props.user.first_name,
+        last_name: this.props.user.last_name,
+        email: this.props.user.email,
+        phone: this.props.user.phone,
+        about: this.props.user.about,
+      }
+    });
   }
 
   onSave() {
