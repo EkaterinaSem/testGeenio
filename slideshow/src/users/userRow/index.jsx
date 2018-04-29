@@ -8,6 +8,14 @@ class UserRow extends Component {
 
   state = {
     isEdit: false,
+    user: {
+      id: this.props.user.id,
+      first_name: this.props.user.first_name,
+      last_name: this.props.user.last_name,
+      email: this.props.user.email,
+      phone: this.props.user.phone,
+      about: this.props.user.about,
+    }
   }
 
   onDelete() {
@@ -28,20 +36,40 @@ class UserRow extends Component {
   }
 
   onCancelEdit() {
-    this.setState({
-        isEdit: false,
-    })
+     this.toggleIsEdit();
   }
 
   onSave() {
-      this.setState({
-          isEdit: false,
-      })
-    }
+     this.toggleIsEdit();
+     const {user: {id}} = this.state;
+     this.context.updateAfterEdit(this.state.user);
+     return $.ajax({
+       method: `PUT`,
+       crossDomain: true,
+       url: `https://geenio-test-job.herokuapp.com/api/v1/users/${id}?api_key=DVEXd6WRcc69cvXI`,
+       dataType: `json`,
+       data: this.state.user,
+     });
+  }
+
+  toggleIsEdit() {
+    this.setState({
+        isEdit: !this.state.isEdit,
+    });
+  }
+
+  onInputChange(e) {
+    const {user} = this.state;
+    this.setState({
+        user: {
+            ...user,
+            [e.target.name]: e.target.value
+        }
+    });
+  }
 
   render() {
-   const  { user } = this.props;
-   const { isEdit } = this.state;
+   const { isEdit, user } = this.state;
 
    return (
      <div className="user-row">
@@ -49,19 +77,29 @@ class UserRow extends Component {
          <span>{user.id}</span>
        </div>
        <div className="user-data first-name">
-        { isEdit ? <input value={user.first_name} /> : <span>{user.first_name}</span> }
+        { isEdit ?
+            <input name="first_name" value={user.first_name} onChange={this.onInputChange.bind(this)} /> :
+            <span>{user.first_name}</span> }
        </div>
        <div className="user-data last-name">
-        { isEdit ? <input value={user.last_name} /> : <span>{user.last_name}</span> }
+        { isEdit ?
+            <input name="last_name" value={user.last_name} onChange={this.onInputChange.bind(this)} /> :
+            <span>{user.last_name}</span> }
        </div>
        <div className="user-data email">
-        { isEdit ? <input value={user.email} /> : <span>{user.email}</span> }
+        { isEdit ?
+            <input name="email" value={user.email} onChange={this.onInputChange.bind(this)} /> :
+            <span>{user.email}</span> }
        </div>
        <div className="user-data phone">
-        { isEdit ? <input value={user.phone} /> : <span>{user.phone}</span> }
+        { isEdit ?
+            <input name="phone" value={user.phone} onChange={this.onInputChange.bind(this)} /> :
+            <span>{user.phone}</span> }
        </div>
        <div className="user-data about">
-        { isEdit ? <input value={user.about} /> : <span>{user.about}</span> }
+        { isEdit ?
+            <input name="about" value={user.about} onChange={this.onInputChange.bind(this)} /> :
+            <span>{user.about}</span> }
        </div>
        <div className="user-data buttons">
          { isEdit ?
@@ -78,6 +116,7 @@ class UserRow extends Component {
 
 UserRow.contextTypes = {
     updateAfterDelete: PropTypes.func,
+    updateAfterEdit: PropTypes.func,
 };
 
 export default UserRow;

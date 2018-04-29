@@ -22,11 +22,13 @@ class MainBlock extends Component {
     //this.onClickAddNew = this.onClickAddNew.bind(this);
     this.uploadAfterCreate = this.uploadAfterCreate.bind(this);
     this.updateAfterDelete = this.updateAfterDelete.bind(this);
+    this.updateAfterEdit = this.updateAfterEdit.bind(this);
   }
 
   getChildContext() {
     return {
       updateAfterDelete: this.updateAfterDelete,
+      updateAfterEdit: this.updateAfterEdit,
     };
   }
 
@@ -41,6 +43,15 @@ class MainBlock extends Component {
     this.setState({
         users: newUsersList,
     });
+  }
+
+  updateAfterEdit(editedUser) {
+    const {users: {users}} = this.state;
+    for (let i = 0; i < users.length; i++) {
+        if (users[i].id === editedUser.id) {
+            users[i] = editedUser;
+        }
+    }
   }
 
   toggleIsAddNew() {
@@ -115,6 +126,7 @@ class MainBlock extends Component {
 
 MainBlock.childContextTypes = {
   updateAfterDelete: PropTypes.func,
+  updateAfterEdit: PropTypes.func,
 };
 
 export default MainBlock;
