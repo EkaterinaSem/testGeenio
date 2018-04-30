@@ -5,6 +5,7 @@ import List from '../list/index';
 import AddNew from '../addNew/index';
 import $ from "jquery";
 import PropTypes from 'prop-types';
+import Search from '../modules/search';
 
 class MainBlock extends Component {
 
@@ -12,17 +13,18 @@ class MainBlock extends Component {
     super(props);
     this.state = {
       isAddNew: false,
+      isSearch: false,
       users: [],
     };
 
-    //this.onClickAdd = this.onClickAdd.bind(this);
     this.onClickCancel = this.onClickCancel.bind(this);
     this.toggleIsAddNew = this.toggleIsAddNew.bind(this);
     this.getAllUsers = this.getAllUsers.bind(this);
-    //this.onClickAddNew = this.onClickAddNew.bind(this);
     this.uploadAfterCreate = this.uploadAfterCreate.bind(this);
     this.updateAfterDelete = this.updateAfterDelete.bind(this);
     this.updateAfterEdit = this.updateAfterEdit.bind(this);
+    this.toggleIsSearch = this.toggleIsSearch.bind(this);
+    this.updateAfterSearch = this.updateAfterSearch.bind(this);
   }
 
   getChildContext() {
@@ -54,11 +56,31 @@ class MainBlock extends Component {
     }
   }
 
+  updateAfterSearch(user) {
+    const searchedUser = [];
+    searchedUser.push(user);
+    this.setState({
+      users: {
+        total_count: 1,
+        users: searchedUser
+      }
+    });
+    console.log(this.state);
+  }
+
   toggleIsAddNew() {
     console.log('toggle')
     this.setState({
       isAddNew: !this.state.isAddNew,
     })
+  }
+
+  toggleIsSearch() {
+    console.log('toggle')
+    this.setState({
+      isSearch: !this.state.isSearch,
+    });
+    this.getAllUsers();
   }
 
   onClickCancel() {
@@ -90,19 +112,11 @@ class MainBlock extends Component {
   uploadAfterCreate(user) {
     this.getAllUsers();
     //делаем перезагрузку списка. в противном случае не будет ID у нового юзера
-    // const usersList = this.state.users.users;
-    // usersList.push(user);
-    // this.setState({
-    //   users: {
-    //     users: usersList,
-    //     total_count: usersList.total_count ? usersList.usersList++ : 1,
-    //   }
-    // });
   }
 
   render() {
-    const {isAddNew, users} = this.state;
-    console.log('render main',this.state)
+    const {isAddNew, isSearch, users} = this.state;
+    console.log('users ', users)
     return (
       <div className="main">
         <div className="head-wrapper">
@@ -110,13 +124,25 @@ class MainBlock extends Component {
             <Button
               disabled={isAddNew}
               onClick={this.toggleIsAddNew}
-            >{'Add new user'}
+            >{'Добавить пользователя'}
+            </Button>
+            <Button
+              cls="right-btn"
+              disabled={isSearch}
+              onClick={this.toggleIsSearch}
+            >
+              {'Найти пользователя'}
             </Button>
           </div>
           {isAddNew && <AddNew
             onClickCancelButton={this.toggleIsAddNew}
             onClickAddButton={this.toggleIsAddNew}
             uploadAfterCreate={this.uploadAfterCreate}
+          />}
+          {isSearch && <Search
+            onClickCancelButton={this.toggleIsSearch}
+            onClickSearchButton={this.toggleIsSearch}
+            updateAfterSearch={this.updateAfterSearch}
           />}
         </div>
         <List users={users}/>

@@ -1,0 +1,10 @@
+.search-form{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.search-form + .button-wrapper{
+    margin-top: 15px;
+}

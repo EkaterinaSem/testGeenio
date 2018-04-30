@@ -71,3 +71,7 @@ button.disabled{
     cursor: default;
     opacity: .6;
 }
+
+button.right-btn{
+    float: right;
+}

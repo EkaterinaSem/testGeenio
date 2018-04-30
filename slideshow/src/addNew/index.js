@@ -22,29 +22,32 @@ class AddNew extends Component {
     this.onClickAddNew = this.onClickAddNew.bind(this);
     this.createUser = this.createUser.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
+    this.hideModal = this.hideModal.bind(this);
   }
 
   createUser() {
-   return $.ajax({
+  const {onClickAddButton, uploadAfterCreate} = this.props;
+  return $.ajax({
          method: `POST`,
          crossDomain: true,
          url: `https://geenio-test-job.herokuapp.com/api/v1/users?api_key=DVEXd6WRcc69cvXI`,
          data: this.state.user,
        })
-       .fail((error) => {
+       .done(() => {
+         onClickAddButton();
+         uploadAfterCreate(this.state.user);
+       })
+       .fail((jqXHR) => {
+         const error = jqXHR.responseJSON;
          this.setState({
-           errors: error.responseJSON.error,
+           errors: error,
          });
          console.log(this.state)
        });
   }
 
   onClickAddNew() {
-    const {onClickAddButton, uploadAfterCreate} = this.props;
-    onClickAddButton();
     this.createUser();
-    console.log(this.state)
-    uploadAfterCreate(this.state.user);
   }
 
   onInputChange(event) {
@@ -57,11 +60,18 @@ class AddNew extends Component {
     });
   }
 
+  hideModal() {
+    this.setState({
+      errors: null,
+    });
+  }
+
   render() {
     const {onClickCancelButton} = this.props;
-    const {user} = this.state;
+    const {user, errors} = this.state;
     return (
       <div>
+        { errors && <Modal error={errors} onClick={this.hideModal} /> }
         <div className="add-new-form">
           <div className={`input-wrapper ${user.first_name && 'not-empty'}`}>
             <input

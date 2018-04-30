@@ -6,23 +6,20 @@ import PropTypes from 'prop-types';
 class Modal extends Component {
 
   render() {
-    const {text, onClick} = this.props;
+    const {error, onClick} = this.props;
+    console.log(error)
     return (
-      <div className="modal-container">
+      <div className="modal-container" onClick={onClick}>
         <div className="modal-wrapper">
           <div className="modal-content">
-            {text}
+            {error.error}
           </div>
-          <Button className="text" onClick={onClick}>OK</Button>
+          <Button cls="text" onClick={onClick}>OK</Button>
         </div>
       </div>
     );
   }
 }
 
-Modal.PropTypes = {
-  error: PropTypes.string,
-  onClick: PropTypes.func,
-};
 
 export default Modal;

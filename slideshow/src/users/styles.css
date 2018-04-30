@@ -19,6 +19,11 @@
     white-space: nowrap;
 }
 
+.user-data.id,
+.list-data.id{
+    width: 14%;
+}
+
 .user-row{
     font: 14px 'Open Sans';
     color: #000;
