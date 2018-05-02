@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './styles.css';
-import Button from '../button';
 import UserRow from './userRow/index';
 
 class Users extends Component {

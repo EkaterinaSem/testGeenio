@@ -84,7 +84,7 @@ class UserRow extends Component {
 
   render() {
    const { isEdit, user } = this.state;
-
+    console.log('user row ', user)
    return (
      <div className="user-row">
        <div className="user-data id">

@@ -28,7 +28,6 @@ class Search extends Component {
       url: `https://geenio-test-job.herokuapp.com/api/v1/users/${id}?api_key=DVEXd6WRcc69cvXI`,
     })
     .done((data) => {
-      console.log(data)
       updateAfterSearch(data);
     })
     .fail((jqXHR) => {
@@ -36,7 +35,6 @@ class Search extends Component {
       this.setState({
         errors: error,
       });
-      console.log(this.state)
     });
   }
 

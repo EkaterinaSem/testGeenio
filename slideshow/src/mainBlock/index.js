@@ -6,12 +6,15 @@ import AddNew from '../addNew/index';
 import $ from "jquery";
 import PropTypes from 'prop-types';
 import Search from '../modules/search';
+import Pagination from "react-js-pagination";
+//import api from '../api/users';
 
 class MainBlock extends Component {
 
   constructor (props){
     super(props);
     this.state = {
+      activePage: 1,
       isAddNew: false,
       isSearch: false,
       users: [],
@@ -57,6 +60,7 @@ class MainBlock extends Component {
   }
 
   updateAfterSearch(user) {
+    console.log(user)
     const searchedUser = [];
     searchedUser.push(user);
     this.setState({
@@ -65,19 +69,19 @@ class MainBlock extends Component {
         users: searchedUser
       }
     });
-    console.log(this.state);
+    console.log('state ', this.state)
   }
 
   toggleIsAddNew() {
-    console.log('toggle')
     this.setState({
+      isSearch: false,
       isAddNew: !this.state.isAddNew,
     })
   }
 
   toggleIsSearch() {
-    console.log('toggle')
     this.setState({
+      isAddNew: false,
       isSearch: !this.state.isSearch,
     });
     this.getAllUsers();
@@ -89,12 +93,15 @@ class MainBlock extends Component {
     })
   }
 
-  getAllUsers() {
+  getAllUsers(offset = 1) {
     return $.ajax({
       method:   `GET`,
       crossDomain: true,
       url:      `https://geenio-test-job.herokuapp.com/api/v1/users?api_key=DVEXd6WRcc69cvXI`,
       dataType: `json`,
+      data: {
+        offset: (offset - 1) * 10,
+      }
     })
     .then((data) =>
       this.setState({
@@ -104,19 +111,36 @@ class MainBlock extends Component {
   }
 
   componentWillMount () {
+    // this.setState({
+    //   users: api.getAllUsers(),
+    // });
+    console.log('mount')
     this.setState({
       users: this.getAllUsers(),
     });
   }
 
   uploadAfterCreate(user) {
-    this.getAllUsers();
+    this.getAllUsers(this.state.activePage);
     //делаем перезагрузку списка. в противном случае не будет ID у нового юзера
   }
 
+  setCurrentPage(number) {
+    this.setState({
+      activePage: number,
+    })
+  }
+
+  // handlePageChange(e) {
+  //   this.setState({
+  //     activePage: e,
+  //   });
+  //   console.log('e ',this.state.activePage);
+  // }
+
   render() {
     const {isAddNew, isSearch, users} = this.state;
-    console.log('users ', users)
+    console.log('rebder state ',this.state.users)
     return (
       <div className="main">
         <div className="head-wrapper">
@@ -146,6 +170,19 @@ class MainBlock extends Component {
           />}
         </div>
         <List users={users}/>
+        <Pagination
+          hideFirstLastPages
+          activePage={this.state.activePage}
+          itemsCountPerPage={10}
+          totalItemsCount={users.total_count}
+          pageRangeDisplayed={5}
+          onChange={(e) => {
+            this.setState({
+              activePage: e,
+            });
+            this.getAllUsers(e);
+          }}
+        />
       </div>
     );
   }
