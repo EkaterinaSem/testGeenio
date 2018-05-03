@@ -3,6 +3,7 @@ import './styles.css';
 import Button from '../button';
 import $ from "jquery";
 import Modal from "../modules/modal";
+import PropTypes from 'prop-types';
 
 class AddNew extends Component {
 
@@ -130,5 +131,9 @@ class AddNew extends Component {
     );
   }
 }
+
+AddNew.PropTypes = {
+  onClickCancelButton: PropTypes.func,
+};
 
 export default AddNew;

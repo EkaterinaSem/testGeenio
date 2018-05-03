@@ -60,16 +60,12 @@ class MainBlock extends Component {
   }
 
   updateAfterSearch(user) {
-    console.log(user)
-    const searchedUser = [];
-    searchedUser.push(user);
     this.setState({
       users: {
-        total_count: 1,
-        users: searchedUser
+        total_count: user.users.length,
+        users: user.users
       }
     });
-    console.log('state ', this.state)
   }
 
   toggleIsAddNew() {

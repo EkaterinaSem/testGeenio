@@ -1,10 +1,14 @@
 .search-form{
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
 }
 
 .search-form + .button-wrapper{
     margin-top: 15px;
+}
+
+.search-form .input-wrapper:nth-child(2){
+    margin-left: 15px;
 }

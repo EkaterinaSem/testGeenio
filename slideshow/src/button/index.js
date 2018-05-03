@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './styles.css';
+import PropTypes from 'prop-types';
 
 class Button extends Component {
-
 
   render() {
     const {cls, onClick, disabled} = this.props;
@@ -19,5 +19,10 @@ class Button extends Component {
   }
 }
 
+Button.PropTypes = {
+  cls: PropTypes.string,
+  onClick: PropTypes.func,
+  disabled: PropTypes.bool,
+};
 
 export default Button;

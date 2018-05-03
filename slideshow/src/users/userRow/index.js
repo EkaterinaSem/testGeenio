@@ -39,18 +39,27 @@ class UserRow extends Component {
      this.setInitialState();
   }
 
-  setInitialState() {
-    this.setState({
-      isEdit: false,
-      user: {
-        id: this.props.user.id,
-        first_name: this.props.user.first_name,
-        last_name: this.props.user.last_name,
-        email: this.props.user.email,
-        phone: this.props.user.phone,
-        about: this.props.user.about,
-      }
-    });
+  setInitialState(nextProps) {
+    if (nextProps) {
+      this.setState({
+        isEdit: false,
+        user: {
+          id: this.props.user.id,
+          first_name: this.props.user.first_name,
+          last_name: this.props.user.last_name,
+          email: this.props.user.email,
+          phone: this.props.user.phone,
+          about: this.props.user.about,
+        }
+      });
+    } else {
+      this.setState({
+        isEdit: false,
+        user: {
+          nextProps,
+        }
+      })
+    }
   }
 
   onSave() {
@@ -82,9 +91,17 @@ class UserRow extends Component {
     });
   }
 
+  componentWillReceiveProps(nextProps){
+    console.log("componentWillRecieveProps()", nextProps);
+    this.setState({
+      isEdit: false,
+      user: nextProps.user,
+    })
+  }
+
   render() {
    const { isEdit, user } = this.state;
-    console.log('user row ', user)
+    console.log('user row ', this.state)
    return (
      <div className="user-row">
        <div className="user-data id">
