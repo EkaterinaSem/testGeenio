@@ -32,6 +32,8 @@ class MainBlock extends Component {
     this.toggleIsSearch = this.toggleIsSearch.bind(this);
     this.updateAfterSearch = this.updateAfterSearch.bind(this);
 
+    console.log(111)
+
   }
 
   getChildContext() {
