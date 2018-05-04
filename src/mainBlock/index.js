@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
-import './styles.css'
-import Button from '../button/index';
-import List from '../list/index';
-import AddNew from '../addNew/index';
-import $ from "jquery";
 import PropTypes from 'prop-types';
+import $ from "jquery";
+
+import Button from 'button/index';
+import List from 'list/index';
+import AddNew from 'addNew/index';
 import Search from '../modules/search';
 import Pagination from "react-js-pagination";
 //import api from '../api/users';
+
+import './styles.css';
+
 
 class MainBlock extends Component {
 
@@ -28,6 +31,7 @@ class MainBlock extends Component {
     this.updateAfterEdit = this.updateAfterEdit.bind(this);
     this.toggleIsSearch = this.toggleIsSearch.bind(this);
     this.updateAfterSearch = this.updateAfterSearch.bind(this);
+
   }
 
   getChildContext() {
