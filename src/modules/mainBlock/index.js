@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Pagination from "react-js-pagination";
 import $ from "jquery";
 
-import Button from 'button/index';
-import List from 'list/index';
-import AddNew from 'addNew/index';
-import Search from '../modules/search';
-import Pagination from "react-js-pagination";
-//import api from '../api/users';
+import Button from 'modules/button';
+import List from 'modules/list';
+import AddNew from 'modules/addNew';
+import Search from 'modules/search';
+import api from 'api/users';
 
 import './styles.css';
 
@@ -31,9 +31,6 @@ class MainBlock extends Component {
     this.updateAfterEdit = this.updateAfterEdit.bind(this);
     this.toggleIsSearch = this.toggleIsSearch.bind(this);
     this.updateAfterSearch = this.updateAfterSearch.bind(this);
-
-    console.log(111)
-
   }
 
   getChildContext() {
@@ -109,14 +106,12 @@ class MainBlock extends Component {
       this.setState({
         users: data
       }));
-
   }
 
   componentWillMount () {
     // this.setState({
     //   users: api.getAllUsers(),
     // });
-    console.log('mount')
     this.setState({
       users: this.getAllUsers(),
     });
@@ -142,7 +137,7 @@ class MainBlock extends Component {
 
   render() {
     const {isAddNew, isSearch, users} = this.state;
-    console.log('rebder state ',this.state.users)
+
     return (
       <div className="main">
         <div className="head-wrapper">

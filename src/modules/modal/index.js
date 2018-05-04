@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import './styles.css';
-import Button from '../../button';
 import PropTypes from 'prop-types';
+
+import Button from 'modules/button';
+
+import './styles.css';
 
 class Modal extends Component {
 
   render() {
     const {error, onClick} = this.props;
-    console.log('error ',error)
+
     return (
       <div className="modal-container" onClick={onClick}>
         <div className="modal-wrapper">
@@ -21,8 +23,8 @@ class Modal extends Component {
   }
 }
 
-Modal.PropTypes = {
-  error: PropTypes.string,
+Modal.propTypes = {
+  error: PropTypes.object,
   onClick: PropTypes.func,
 };
 

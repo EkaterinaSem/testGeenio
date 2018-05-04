@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import './styles.css';
-import Button from '../button';
-import $ from "jquery";
-import Modal from "../modules/modal";
 import PropTypes from 'prop-types';
+import $ from "jquery";
+
+import Button from 'modules/button';
+import Modal from "modules/modal";
+
+import './styles.css';
 
 class AddNew extends Component {
 
@@ -43,7 +45,6 @@ class AddNew extends Component {
          this.setState({
            errors: error,
          });
-         console.log(this.state)
        });
   }
 
@@ -132,7 +133,7 @@ class AddNew extends Component {
   }
 }
 
-AddNew.PropTypes = {
+AddNew.propTypes = {
   onClickCancelButton: PropTypes.func,
 };
 

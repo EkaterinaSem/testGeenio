@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import './styles.css';
-import UserRow from './userRow/index';
 import PropTypes from 'prop-types';
+
+import UserRow from './userRow/index';
+
+import './styles.css';
 
 class Users extends Component {
 
   render() {
     const {users} = this.props;
-    console.log('USERS ', users)
     return (
       <div className="users-list-wrapper">
         <div className="users-list-head">
@@ -26,7 +27,7 @@ class Users extends Component {
   }
 }
 
-Users.PropTypes = {
+Users.propTypes = {
   users: PropTypes.any,
 };
 

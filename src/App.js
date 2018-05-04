@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import MainBlock from './mainBlock/index';
+import MainBlock from 'modules/mainBlock';
 
 class App extends Component {
   render() {

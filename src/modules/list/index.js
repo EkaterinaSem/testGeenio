@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import './styles.css';
-import Users from '../users/index';
 import PropTypes from 'prop-types';
+
+import Users from 'modules/users/index';
+
+import './styles.css';
 
 class List extends Component {
 
@@ -15,7 +17,7 @@ class List extends Component {
 
   render() {
     const {users} = this.props;
-    console.log('total count ',users, users.total_count);
+
     return (
       <div className={`list-wrapper ${users.total_count === 0 && 'empty'}`}>
         {users.total_count > 0 ? <Users users={users.users} /> :
@@ -26,7 +28,7 @@ class List extends Component {
   }
 }
 
-List.PropTypes = {
+List.propTypes = {
   users: PropTypes.any,
 };
 

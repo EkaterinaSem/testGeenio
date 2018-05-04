@@ -1,4 +1,4 @@
-
+import $ from "jquery";
 /**
  * Общая информация о приложении
  * @returns {Promise}
@@ -13,9 +13,9 @@ const getAllUsers = (offset = 1) => {
       offset: (offset - 1) * 10,
     }
   })
-    .then((data) => {
-      return data;
-    })
+  .then((data) =>{
+    return data;
+  });
 };
 
 

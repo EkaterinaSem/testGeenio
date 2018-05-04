@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import '../styles.css';
-import Button from '../../button';
-import $ from "jquery";
 import PropTypes from 'prop-types';
+import $ from "jquery";
+
+import Button from 'modules/button';
+
+import '../styles.css';
 
 class UserRow extends Component {
 
@@ -92,7 +94,6 @@ class UserRow extends Component {
   }
 
   componentWillReceiveProps(nextProps){
-    console.log("componentWillRecieveProps()", nextProps);
     this.setState({
       isEdit: false,
       user: nextProps.user,
@@ -101,7 +102,7 @@ class UserRow extends Component {
 
   render() {
    const { isEdit, user } = this.state;
-    console.log('user row ', this.state)
+
    return (
      <div className="user-row">
        <div className="user-data id">

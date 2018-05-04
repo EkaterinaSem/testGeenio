@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import './styles.css';
-import Button from '../../button';
-import $ from "jquery";
-import Modal from "../modal";
 import PropTypes from 'prop-types';
+import $ from "jquery";
+
+import Button from 'modules/button';
+import Modal from "modules/modal";
+
+import './styles.css';
 
 class Search extends Component {
 
@@ -54,6 +56,7 @@ class Search extends Component {
   render() {
     const {onClickCancelButton} = this.props;
     const {search_field, errors} = this.state;
+
     return (
       <div>
         { errors && <Modal error={errors} onClick={this.hideModal} /> }
@@ -83,7 +86,7 @@ class Search extends Component {
   }
 }
 
-Search.PropTypes = {
+Search.propTypes = {
   onClickCancelButton: PropTypes.func,
 };
 
