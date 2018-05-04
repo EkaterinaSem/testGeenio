@@ -1,11 +1,11 @@
 {
-  "main.css": "static/css/main.bd4884e3.css",
-  "main.css.map": "static/css/main.bd4884e3.css.map",
-  "main.js": "static/js/main.3e3fbd22.js",
-  "main.js.map": "static/js/main.3e3fbd22.js.map",
+  "main.css": "static/css/main.b27557b2.css",
+  "main.css.map": "static/css/main.b27557b2.css.map",
+  "main.js": "static/js/main.091cc312.js",
+  "main.js.map": "static/js/main.091cc312.js.map",
   "static/media/cancel-icon.svg": "static/media/cancel-icon.e85191c6.svg",
-  "static/media/delete-icon.svg": "static/media/delete-icon.e3d124d0.svg",
-  "static/media/edit-icon.svg": "static/media/edit-icon.d37d9400.svg",
+  "static/media/delete-icon.svg": "static/media/delete-icon.fa1a1867.svg",
+  "static/media/edit-icon.svg": "static/media/edit-icon.b5bd0851.svg",
   "static/media/open-sans.ttf": "static/media/open-sans.629a55a7.ttf",
   "static/media/save-icon.svg": "static/media/save-icon.bcad834c.svg"
 }
