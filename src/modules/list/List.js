@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import Users from 'modules/users/index';
+import Users from 'modules/users/Users';
 
-import './styles.css';
+import './list.css';
 
 class List extends Component {
 
@@ -29,7 +29,7 @@ class List extends Component {
 }
 
 List.propTypes = {
-  users: PropTypes.any,
+  users: PropTypes.object.isRequired,
 };
 
 export default List;

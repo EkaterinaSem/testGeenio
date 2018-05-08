@@ -52,6 +52,7 @@ input:focus + .placeholder{
     margin-left: 15px;
     margin-top: 20px;
     position: relative;
+    font: 14px 'Open Sans';
 }
 
 .placeholder{

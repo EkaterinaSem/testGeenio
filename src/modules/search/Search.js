@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import $ from "jquery";
 
-import Button from 'modules/button';
-import Modal from "modules/modal";
+import Button from 'modules/button/Button';
+import Modal from "modules/modal/Modal";
+import api from 'api/users';
 
-import './styles.css';
+import './search.css';
 
 class Search extends Component {
 
@@ -25,11 +25,7 @@ class Search extends Component {
   searchUser() {
     const {updateAfterSearch} = this.props;
     const {search_field} = this.state;
-    return $.ajax({
-      method: `GET`,
-      crossDomain: true,
-      url: `https://geenio-test-job.herokuapp.com/api/v1/users?api_key=DVEXd6WRcc69cvXI&name=${search_field}`,
-    })
+    api.searchUser(search_field)
     .done((data) => {
       updateAfterSearch(data);
     })

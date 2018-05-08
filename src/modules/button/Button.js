@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import './styles.css';
+import './button.css';
 
 
 class Button extends Component {
 
   render() {
-    const {cls, onClick, disabled} = this.props;
-    const className = `${cls} ${disabled ? 'disabled' : ''}`;
+    const {customClass, onClick, disabled} = this.props;
+    const className = `${customClass} ${disabled ? 'disabled' : ''}`;
 
     return (
       <button
@@ -21,10 +21,15 @@ class Button extends Component {
   }
 }
 
+Button.defaultProps = {
+  disabled: false,
+  customClass: ''
+};
+
 Button.propTypes = {
-  cls: PropTypes.string,
-  onClick: PropTypes.func,
+  customClass: PropTypes.string,
   disabled: PropTypes.bool,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default Button;

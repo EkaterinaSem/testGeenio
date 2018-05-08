@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import UserRow from './userRow/index';
+import UserRow from './userRow/UserRow';
 
-import './styles.css';
+import './users.css';
 
 class Users extends Component {
 
@@ -28,7 +28,7 @@ class Users extends Component {
 }
 
 Users.propTypes = {
-  users: PropTypes.any,
+  users: PropTypes.array.isRequired,
 };
 
 export default Users;

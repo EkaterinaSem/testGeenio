@@ -20,6 +20,7 @@
 
 .pagination{
   margin-top: 20px;
+  font: 15px 'Open Sans';
 }
 
 .pagination li{
@@ -28,13 +29,13 @@
   padding: 5px;
 }
 
-.pagination li.active{
-  box-shadow: 0 0 1px 1px #eaeaea;
+.pagination li.active a{
+  color: #24b989;
 }
 
 .pagination li a{
   text-decoration: none;
-  color: #3c3c3c;
+  color: #757575;
 }
 
 .pagination li.disabled a{

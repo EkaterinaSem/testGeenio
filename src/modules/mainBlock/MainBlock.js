@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Pagination from "react-js-pagination";
-import $ from "jquery";
 
-import Button from 'modules/button';
-import List from 'modules/list';
-import AddNew from 'modules/addNew';
-import Search from 'modules/search';
+import Button from 'modules/button/Button';
+import List from 'modules/list/List';
+import AddNew from 'modules/addNew/AddNew';
+import Search from 'modules/search/Search';
 import api from 'api/users';
 
-import './styles.css';
+import './mainBlock.css';
 
 
 class MainBlock extends Component {
@@ -20,17 +19,17 @@ class MainBlock extends Component {
       activePage: 1,
       isAddNew: false,
       isSearch: false,
-      users: [],
+      users: {},
     };
 
     this.onClickCancel = this.onClickCancel.bind(this);
     this.toggleIsAddNew = this.toggleIsAddNew.bind(this);
-    this.getAllUsers = this.getAllUsers.bind(this);
     this.uploadAfterCreate = this.uploadAfterCreate.bind(this);
     this.updateAfterDelete = this.updateAfterDelete.bind(this);
     this.updateAfterEdit = this.updateAfterEdit.bind(this);
     this.toggleIsSearch = this.toggleIsSearch.bind(this);
     this.updateAfterSearch = this.updateAfterSearch.bind(this);
+    this.getAllUsers = this.getAllUsers.bind(this);
   }
 
   getChildContext() {
@@ -92,41 +91,31 @@ class MainBlock extends Component {
     })
   }
 
-  getAllUsers(offset = 1) {
-    return $.ajax({
-      method:   `GET`,
-      crossDomain: true,
-      url:      `https://geenio-test-job.herokuapp.com/api/v1/users?api_key=DVEXd6WRcc69cvXI`,
-      dataType: `json`,
-      data: {
-        offset: (offset - 1) * 10,
+  getAllUsers (e) {
+    api.getAllUsers(e)
+    .then((data) => {
+        this.setState({
+          users: data
+        })
       }
-    })
-    .then((data) =>
-      this.setState({
-        users: data
-      }));
+    );
   }
 
   componentWillMount () {
-    // this.setState({
-    //   users: api.getAllUsers(),
-    // });
-    this.setState({
-      users: this.getAllUsers(),
-    });
+    this.getAllUsers();
   }
 
-  uploadAfterCreate(user) {
-    this.getAllUsers(this.state.activePage);
+  uploadAfterCreate() {
+    const {activePage} = this.state;
+    this.getAllUsers(activePage);
     //делаем перезагрузку списка. в противном случае не будет ID у нового юзера
   }
 
-  setCurrentPage(number) {
-    this.setState({
-      activePage: number,
-    })
-  }
+  // setCurrentPage(number) {
+  //   this.setState({
+  //     activePage: number,
+  //   })
+  // }
 
   // handlePageChange(e) {
   //   this.setState({
@@ -136,7 +125,7 @@ class MainBlock extends Component {
   // }
 
   render() {
-    const {isAddNew, isSearch, users} = this.state;
+    const {isAddNew, isSearch, users, activePage} = this.state;
 
     return (
       <div className="main">
@@ -148,7 +137,7 @@ class MainBlock extends Component {
             >{'Добавить пользователя'}
             </Button>
             <Button
-              cls="right-btn"
+              customClass="right-btn"
               disabled={isSearch}
               onClick={this.toggleIsSearch}
             >
@@ -169,7 +158,7 @@ class MainBlock extends Component {
         <List users={users}/>
         <Pagination
           hideFirstLastPages
-          activePage={this.state.activePage}
+          activePage={activePage}
           itemsCountPerPage={10}
           totalItemsCount={users.total_count}
           pageRangeDisplayed={5}
@@ -177,7 +166,7 @@ class MainBlock extends Component {
             this.setState({
               activePage: e,
             });
-            this.getAllUsers(e);
+            this.getAllUsers(e);// ПОТЕРЯ КОНТЕКСТА
           }}
         />
       </div>

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import Button from 'modules/button';
+import Button from 'modules/button/Button';
 
-import './styles.css';
+import './modal.css';
 
 class Modal extends Component {
 
@@ -16,7 +16,7 @@ class Modal extends Component {
           <div className="modal-content">
             {error.error}
           </div>
-          <Button cls="text" onClick={onClick}>OK</Button>
+          <Button customClass="text" onClick={onClick}>OK</Button>
         </div>
       </div>
     );
@@ -25,7 +25,7 @@ class Modal extends Component {
 
 Modal.propTypes = {
   error: PropTypes.object,
-  onClick: PropTypes.func,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default Modal;
