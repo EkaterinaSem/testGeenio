@@ -16,11 +16,11 @@ class List extends Component {
   }
 
   render() {
-    const {users} = this.props;
+    const { users } = this.props;
 
     return (
-      <div className={`list-wrapper ${users.total_count === 0 && 'empty'}`}>
-        {users.total_count > 0 ? <Users users={users.users} /> :
+      <div className={`list-wrapper ${users.length === 0 && 'empty'}`}>
+        {users.length > 0 ? <Users users={users} /> :
           List.renderEmptyBlock()
         }
       </div>
@@ -29,7 +29,7 @@ class List extends Component {
 }
 
 List.propTypes = {
-  users: PropTypes.object.isRequired,
+  users: PropTypes.array.isRequired,
 };
 
 export default List;

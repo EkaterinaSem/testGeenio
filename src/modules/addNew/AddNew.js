@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import Button from 'modules/button/Button';
 import Modal from "modules/modal/Modal";
 import api from 'api/users';
+import * as actions from 'actions';
 
 import './addNew.css';
 
@@ -30,17 +32,23 @@ class AddNew extends Component {
   onClickAddNew() {
     const {onClickAddButton, uploadAfterCreate} = this.props;
     const {user} = this.state;
-    api.createUser(user)
-    .done(() => {
-      onClickAddButton();
-      uploadAfterCreate(user);
-    })
-    .fail((jqXHR) => {
-      const error = jqXHR.responseJSON;
-      this.setState({
-        errors: error,
-      });
-    });
+
+    const { dispatch } = this.props;
+    dispatch(actions.createUser(user));
+    // dispatch
+    // action.createUser(user).
+
+    // api.createUser(user)
+    // .done(() => {
+    //   onClickAddButton();
+    //   uploadAfterCreate(user);
+    // })
+    // .fail((jqXHR) => {
+    //   const error = jqXHR.responseJSON;
+    //   this.setState({
+    //     errors: error,
+    //   });
+    // });
   }
 
   onInputChange(event) {
@@ -128,4 +136,11 @@ AddNew.propTypes = {
   onClickCancelButton: PropTypes.func.isRequired,
 };
 
-export default AddNew;
+const mapStateToProps = (state) => {
+  console.log(state)
+  return {
+    list: state.list
+  }
+};
+
+export default connect(mapStateToProps)(AddNew);

@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import Button from 'modules/button/Button';
 import Modal from "modules/modal/Modal";
 import api from 'api/users';
+import * as actions from 'actions';
 
 import './search.css';
 
@@ -25,16 +27,19 @@ class Search extends Component {
   searchUser() {
     const {updateAfterSearch} = this.props;
     const {search_field} = this.state;
-    api.searchUser(search_field)
-    .done((data) => {
-      updateAfterSearch(data);
-    })
-    .fail((jqXHR) => {
-      const error = jqXHR.responseJSON;
-      this.setState({
-        errors: error,
-      });
-    });
+    const { dispatch } = this.props;
+    dispatch(actions.searchUser(search_field));
+
+    // api.searchUser(search_field)
+    // .done((data) => {
+    //   updateAfterSearch(data);
+    // })
+    // .fail((jqXHR) => {
+    //   const error = jqXHR.responseJSON;
+    //   this.setState({
+    //     errors: error,
+    //   });
+    // });
   }
 
   onInputChange(event) {
@@ -86,4 +91,10 @@ Search.propTypes = {
   onClickCancelButton: PropTypes.func,
 };
 
-export default Search;
+const mapStateToProps = (state) => {
+  return {
+    list: state.list
+  }
+};
+
+export default connect(mapStateToProps)(Search);

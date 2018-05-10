@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Pagination from "react-js-pagination";
+import { connect } from 'react-redux';
 
 import Button from 'modules/button/Button';
 import List from 'modules/list/List';
 import AddNew from 'modules/addNew/AddNew';
 import Search from 'modules/search/Search';
-import api from 'api/users';
+import * as actions from 'actions';
 
 import './mainBlock.css';
 
@@ -40,16 +41,16 @@ class MainBlock extends Component {
   }
 
   updateAfterDelete(id) {
-    const {users} = this.state;
-    const newUsersList = {
-        total_count: users.total_count - 1,
-        users: users.users.filter((user) => {
-            return user.id !== id;
-        })
-    };
-    this.setState({
-        users: newUsersList,
-    });
+    // const {users} = this.state;
+    // const newUsersList = {
+    //     total_count: users.total_count - 1,
+    //     users: users.users.filter((user) => {
+    //         return user.id !== id;
+    //     })
+    // };
+    // this.setState({
+    //     users: newUsersList,
+    // });
   }
 
   updateAfterEdit(editedUser) {
@@ -62,12 +63,12 @@ class MainBlock extends Component {
   }
 
   updateAfterSearch(user) {
-    this.setState({
-      users: {
-        total_count: user.users.length,
-        users: user.users
-      }
-    });
+    // this.setState({
+    //   users: {
+    //     total_count: user.users.length,
+    //     users: user.users
+    //   }
+    // });
   }
 
   toggleIsAddNew() {
@@ -91,14 +92,9 @@ class MainBlock extends Component {
     })
   }
 
-  getAllUsers (e) {
-    api.getAllUsers(e)
-    .then((data) => {
-        this.setState({
-          users: data
-        })
-      }
-    );
+  getAllUsers () {
+    const { dispatch } = this.props;
+    dispatch(actions.getAllUsers());
   }
 
   componentWillMount () {
@@ -125,7 +121,8 @@ class MainBlock extends Component {
   // }
 
   render() {
-    const {isAddNew, isSearch, users, activePage} = this.state;
+    const { list: { users } } = this.props;
+    const { isAddNew, isSearch, activePage } = this.state;
 
     return (
       <div className="main">
@@ -156,19 +153,19 @@ class MainBlock extends Component {
           />}
         </div>
         <List users={users}/>
-        <Pagination
-          hideFirstLastPages
-          activePage={activePage}
-          itemsCountPerPage={10}
-          totalItemsCount={users.total_count}
-          pageRangeDisplayed={5}
-          onChange={(e) => {
-            this.setState({
-              activePage: e,
-            });
-            this.getAllUsers(e);// ПОТЕРЯ КОНТЕКСТА
-          }}
-        />
+        {/*<Pagination*/}
+          {/*hideFirstLastPages*/}
+          {/*activePage={activePage}*/}
+          {/*itemsCountPerPage={10}*/}
+          {/*totalItemsCount={users.total_count}*/}
+          {/*pageRangeDisplayed={5}*/}
+          {/*onChange={(e) => {*/}
+            {/*this.setState({*/}
+              {/*activePage: e,*/}
+            {/*});*/}
+            {/*this.getAllUsers(e);// ПОТЕРЯ КОНТЕКСТА*/}
+          {/*}}*/}
+        {/*/>*/}
       </div>
     );
   }
@@ -179,4 +176,11 @@ MainBlock.childContextTypes = {
   updateAfterEdit: PropTypes.func,
 };
 
-export default MainBlock;
+const mapStateToProps = (state) => {
+  console.log('main state ',state)
+  return {
+    list: state.list
+  }
+};
+
+export default connect(mapStateToProps)(MainBlock);
