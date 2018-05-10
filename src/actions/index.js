@@ -43,11 +43,10 @@ export const searchUser = (data) => {
   return (dispatch) => {
     api.searchUser(data)
       .then((users) => {
-        console.log('user ', users)
         dispatch({
           type: ACTIONS.REQUEST_USER_SEARCH_SUCCESS,
           payload: {
-            users: users
+            users: users.users
           }
         });
       })
@@ -56,5 +55,24 @@ export const searchUser = (data) => {
           type: ACTIONS.REQUEST_USER_SEARCH_FAIL,
         });
       })
+  }
+};
+
+export const deleteUser = (id) => {
+  return (dispatch) => {
+    api.deleteUser(id)
+    .then((users) => {
+      dispatch({
+        type: ACTIONS.REQUEST_USER_DELETE_SUCCESS,
+        payload: {
+          users: users
+        }
+      });
+    })
+    .catch(() => {
+      dispatch({
+        type: ACTIONS.REQUEST_USER_DELETE_FAIL,
+      });
+    })
   }
 };

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import Button from 'modules/button/Button';
-import api from 'api/users';
+import * as actions from 'actions';
 
 import '../users.css';
 
@@ -21,9 +22,10 @@ class UserRow extends Component {
   };
 
   onDelete() {
-    const {user: {id}} = this.props;
-    this.context.updateAfterDelete(id);
-    api.deleteUser(id);
+    const { user: {id}, dispatch } = this.props;
+    // this.context.updateAfterDelete(id);
+    dispatch(actions.deleteUser(id));
+    //api.deleteUser(id);
   }
 
   onEdit() {
@@ -62,7 +64,7 @@ class UserRow extends Component {
   onSave() {
      this.toggleIsEdit();
      const {user} = this.state;
-     api.editUser(user);
+    // api.editUser(user);
      this.context.updateAfterEdit(user);
   }
 
@@ -136,7 +138,6 @@ class UserRow extends Component {
 }
 
 UserRow.contextTypes = {
-  updateAfterDelete: PropTypes.func,
   updateAfterEdit: PropTypes.func,
 };
 
@@ -144,4 +145,10 @@ UserRow.propTypes = {
   user: PropTypes.object.isRequired,
 };
 
-export default UserRow;
+const mapStateToProps = (state) => {
+  return {
+    list: state.list
+  }
+};
+
+export default connect(mapStateToProps)(UserRow);

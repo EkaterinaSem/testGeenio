@@ -26,10 +26,8 @@ class MainBlock extends Component {
     this.onClickCancel = this.onClickCancel.bind(this);
     this.toggleIsAddNew = this.toggleIsAddNew.bind(this);
     this.uploadAfterCreate = this.uploadAfterCreate.bind(this);
-    this.updateAfterDelete = this.updateAfterDelete.bind(this);
     this.updateAfterEdit = this.updateAfterEdit.bind(this);
     this.toggleIsSearch = this.toggleIsSearch.bind(this);
-    this.updateAfterSearch = this.updateAfterSearch.bind(this);
     this.getAllUsers = this.getAllUsers.bind(this);
   }
 

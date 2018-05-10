@@ -16,9 +16,20 @@ const list = (state = initialState, action) => {
       copyUsers.push(action.payload.user);
       return {...state, users: copyUsers};
     case ACTIONS.REQUEST_USER_SEARCH_SUCCESS:
-      const searchedUsers = [...state.users];
-      searchedUsers.push(action.payload.users);
-      return {...state, users: searchedUsers};
+      return {...state,
+        users: action.payload.users,
+        total_count: action.payload.length,
+      };
+    case ACTIONS.REQUEST_USER_DELETE_SUCCESS:
+      let usersAfterDelete = [...state.users];
+      console.log('filter ',usersAfterDelete, action.payload.user.id)
+      usersAfterDelete = usersAfterDelete.filter((user) => {
+
+        return user.id !== action.payload.user.id;
+      });
+      return {...state,
+        users: usersAfterDelete,
+      };
     default:
       return state;
   }
