@@ -23,9 +23,7 @@ class UserRow extends Component {
 
   onDelete() {
     const { user: {id}, dispatch } = this.props;
-    // this.context.updateAfterDelete(id);
     dispatch(actions.deleteUser(id));
-    //api.deleteUser(id);
   }
 
   onEdit() {
@@ -64,8 +62,10 @@ class UserRow extends Component {
   onSave() {
      this.toggleIsEdit();
      const {user} = this.state;
+    const { dispatch } = this.props;
+    dispatch(actions.editUser(user));
     // api.editUser(user);
-     this.context.updateAfterEdit(user);
+     //this.context.updateAfterEdit(user);
   }
 
   toggleIsEdit() {
@@ -137,9 +137,6 @@ class UserRow extends Component {
   }
 }
 
-UserRow.contextTypes = {
-  updateAfterEdit: PropTypes.func,
-};
 
 UserRow.propTypes = {
   user: PropTypes.object.isRequired,

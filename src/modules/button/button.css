@@ -36,7 +36,7 @@ button.text:hover{
 }
 
 button.edit{
-    background: transparent url(/images/edit-icon.svg) no-repeat center center;
+    background: transparent url(../../images/edit-icon.svg) no-repeat center center;
     width: 20px;
     height: 20px;
     border: none;
@@ -44,7 +44,7 @@ button.edit{
 }
 
 button.delete{
-    background: transparent url(/images/delete-icon.svg) no-repeat center center;
+    background: transparent url(../../images/delete-icon.svg) no-repeat center center;
     width: 20px;
     height: 20px;
     border: none;
@@ -52,7 +52,7 @@ button.delete{
 }
 
 button.save{
-    background: transparent url(/images/save-icon.svg) no-repeat center center;
+    background: transparent url(../../images/save-icon.svg) no-repeat center center;
     width: 20px;
     height: 20px;
     border: none;
@@ -60,7 +60,7 @@ button.save{
 }
 
 button.cancel{
-    background: transparent url(/images/cancel-icon.svg) no-repeat center center;
+    background: transparent url(../../images/cancel-icon.svg) no-repeat center center;
     width: 20px;
     height: 20px;
     border: none;

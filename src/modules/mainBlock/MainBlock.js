@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import Pagination from "react-js-pagination";
 import { connect } from 'react-redux';
 
+import Modal from "modules/modal/Modal";
 import Button from 'modules/button/Button';
 import List from 'modules/list/List';
 import AddNew from 'modules/addNew/AddNew';
@@ -11,173 +11,97 @@ import * as actions from 'actions';
 
 import './mainBlock.css';
 
-
 class MainBlock extends Component {
 
-  constructor (props){
+  constructor (props) {
     super(props);
     this.state = {
       activePage: 1,
-      isAddNew: false,
-      isSearch: false,
-      users: {},
     };
 
     this.onClickCancel = this.onClickCancel.bind(this);
-    this.toggleIsAddNew = this.toggleIsAddNew.bind(this);
-    this.uploadAfterCreate = this.uploadAfterCreate.bind(this);
-    this.updateAfterEdit = this.updateAfterEdit.bind(this);
-    this.toggleIsSearch = this.toggleIsSearch.bind(this);
+    this.showAddNew = this.showAddNew.bind(this);
+    this.showSearch = this.showSearch.bind(this);
     this.getAllUsers = this.getAllUsers.bind(this);
   }
 
-  getChildContext() {
-    return {
-      updateAfterDelete: this.updateAfterDelete,
-      updateAfterEdit: this.updateAfterEdit,
-    };
+  showAddNew () {
+    const { dispatch, list } = this.props;
+    dispatch(actions.showAddNew());
   }
 
-  updateAfterDelete(id) {
-    // const {users} = this.state;
-    // const newUsersList = {
-    //     total_count: users.total_count - 1,
-    //     users: users.users.filter((user) => {
-    //         return user.id !== id;
-    //     })
-    // };
-    // this.setState({
-    //     users: newUsersList,
-    // });
-  }
-
-  updateAfterEdit(editedUser) {
-    const {users: {users}} = this.state;
-    for (let i = 0; i < users.length; i++) {
-        if (users[i].id === editedUser.id) {
-            users[i] = editedUser;
-        }
-    }
-  }
-
-  updateAfterSearch(user) {
-    // this.setState({
-    //   users: {
-    //     total_count: user.users.length,
-    //     users: user.users
-    //   }
-    // });
-  }
-
-  toggleIsAddNew() {
-    this.setState({
-      isSearch: false,
-      isAddNew: !this.state.isAddNew,
-    })
-  }
-
-  toggleIsSearch() {
-    this.setState({
-      isAddNew: false,
-      isSearch: !this.state.isSearch,
-    });
-    this.getAllUsers();
-  }
-
-  onClickCancel() {
-    this.setState({
-      isAddNew: false,
-    })
-  }
-
-  getAllUsers () {
+  showSearch () {
     const { dispatch } = this.props;
-    dispatch(actions.getAllUsers());
+    dispatch(actions.showSearch());
+  }
+
+  onClickCancel () {
+    this.setState({
+      isAddNew: false,
+    })
+  }
+
+  getAllUsers (offset) {
+    const { dispatch } = this.props;
+    dispatch(actions.getAllUsers(offset));
   }
 
   componentWillMount () {
     this.getAllUsers();
   }
 
-  uploadAfterCreate() {
-    const {activePage} = this.state;
-    this.getAllUsers(activePage);
-    //делаем перезагрузку списка. в противном случае не будет ID у нового юзера
+  changePage (offset) {
+    this.setState({
+      activePage: offset,
+    });
+    this.getAllUsers(offset);
   }
 
-  // setCurrentPage(number) {
-  //   this.setState({
-  //     activePage: number,
-  //   })
-  // }
-
-  // handlePageChange(e) {
-  //   this.setState({
-  //     activePage: e,
-  //   });
-  //   console.log('e ',this.state.activePage);
-  // }
-
   render() {
-    const { list: { users } } = this.props;
-    const { isAddNew, isSearch, activePage } = this.state;
+    const { list: { users, total_count, isAddNew, isSearch, errors, showModal } } = this.props;
+    const { activePage } = this.state;
 
     return (
       <div className="main">
+        { showModal && <Modal error={errors} /> }
         <div className="head-wrapper">
           <div className="button-wrapper">
             <Button
               disabled={isAddNew}
-              onClick={this.toggleIsAddNew}
+              onClick={this.showAddNew}
             >{'Добавить пользователя'}
             </Button>
             <Button
               customClass="right-btn"
               disabled={isSearch}
-              onClick={this.toggleIsSearch}
+              onClick={this.showSearch}
             >
               {'Найти пользователя'}
             </Button>
           </div>
-          {isAddNew && <AddNew
-            onClickCancelButton={this.toggleIsAddNew}
-            onClickAddButton={this.toggleIsAddNew}
-            uploadAfterCreate={this.uploadAfterCreate}
-          />}
-          {isSearch && <Search
-            onClickCancelButton={this.toggleIsSearch}
-            onClickSearchButton={this.toggleIsSearch}
-            updateAfterSearch={this.updateAfterSearch}
-          />}
+          {isAddNew && <AddNew />}
+          {isSearch && <Search />}
         </div>
         <List users={users}/>
-        {/*<Pagination*/}
-          {/*hideFirstLastPages*/}
-          {/*activePage={activePage}*/}
-          {/*itemsCountPerPage={10}*/}
-          {/*totalItemsCount={users.total_count}*/}
-          {/*pageRangeDisplayed={5}*/}
-          {/*onChange={(e) => {*/}
-            {/*this.setState({*/}
-              {/*activePage: e,*/}
-            {/*});*/}
-            {/*this.getAllUsers(e);// ПОТЕРЯ КОНТЕКСТА*/}
-          {/*}}*/}
-        {/*/>*/}
+        <Pagination
+          hideFirstLastPages
+          activePage={activePage}
+          itemsCountPerPage={10}
+          totalItemsCount={total_count}
+          pageRangeDisplayed={5}
+          onChange={(offset) => {
+            this.changePage.call(this, offset);
+          }}
+        />
       </div>
     );
   }
 }
 
-MainBlock.childContextTypes = {
-  updateAfterDelete: PropTypes.func,
-  updateAfterEdit: PropTypes.func,
-};
 
 const mapStateToProps = (state) => {
-  console.log('main state ',state)
   return {
-    list: state.list
+    list: state.list,
   }
 };
 

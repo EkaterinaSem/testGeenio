@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Button from 'modules/button/Button';
-import Modal from "modules/modal/Modal";
-import api from 'api/users';
 import * as actions from 'actions';
 
 import './search.css';
@@ -14,32 +11,18 @@ class Search extends Component {
   constructor () {
     super();
     this.state = {
-      errors: null,
       search_field: null,
-      last_name: null,
     };
 
     this.searchUser = this.searchUser.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
-    this.hideModal = this.hideModal.bind(this);
+    this.onClickCancelButton = this.onClickCancelButton.bind(this);
   }
 
   searchUser() {
-    const {updateAfterSearch} = this.props;
     const {search_field} = this.state;
     const { dispatch } = this.props;
     dispatch(actions.searchUser(search_field));
-
-    // api.searchUser(search_field)
-    // .done((data) => {
-    //   updateAfterSearch(data);
-    // })
-    // .fail((jqXHR) => {
-    //   const error = jqXHR.responseJSON;
-    //   this.setState({
-    //     errors: error,
-    //   });
-    // });
   }
 
   onInputChange(event) {
@@ -48,19 +31,17 @@ class Search extends Component {
     });
   }
 
-  hideModal() {
-    this.setState({
-      errors: null,
-    });
+  onClickCancelButton () {
+    const { dispatch } = this.props;
+    dispatch(actions.hideSearch());
+    dispatch(actions.getAllUsers());
   }
 
   render() {
-    const {onClickCancelButton} = this.props;
-    const {search_field, errors} = this.state;
+    const { search_field } = this.state;
 
     return (
       <div>
-        { errors && <Modal error={errors} onClick={this.hideModal} /> }
         <div className="search-form">
           <div className={`input-wrapper ${search_field && 'not-empty'}`}>
             <input
@@ -77,7 +58,7 @@ class Search extends Component {
           >Искать
           </Button>
           <Button
-            onClick={onClickCancelButton}
+            onClick={this.onClickCancelButton}
             cls={'text'}
           >Отмена
           </Button>
@@ -86,10 +67,6 @@ class Search extends Component {
     );
   }
 }
-
-Search.propTypes = {
-  onClickCancelButton: PropTypes.func,
-};
 
 const mapStateToProps = (state) => {
   return {

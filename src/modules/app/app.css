@@ -37,5 +37,5 @@ body, *{
 
 @font-face{
   font-family: 'Open Sans';
-  src: url('/fonts/OpenSans/open-sans.ttf') format("truetype");
+  src: url('../../fonts/OpenSans/open-sans.ttf') format("truetype");
 }

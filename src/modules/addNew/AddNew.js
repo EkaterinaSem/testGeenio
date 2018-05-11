@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Button from 'modules/button/Button';
-import Modal from "modules/modal/Modal";
-import api from 'api/users';
 import * as actions from 'actions';
 
 import './addNew.css';
@@ -14,7 +11,6 @@ class AddNew extends Component {
   constructor () {
     super();
     this.state = {
-      errors: null,
       user: {
         first_name: null,
         last_name: null,
@@ -26,29 +22,14 @@ class AddNew extends Component {
 
     this.onClickAddNew = this.onClickAddNew.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
-    this.hideModal = this.hideModal.bind(this);
+    this.onClickCancelButton = this.onClickCancelButton.bind(this);
   }
 
   onClickAddNew() {
-    const {onClickAddButton, uploadAfterCreate} = this.props;
     const {user} = this.state;
-
     const { dispatch } = this.props;
+    dispatch(actions.getAllUsers());
     dispatch(actions.createUser(user));
-    // dispatch
-    // action.createUser(user).
-
-    // api.createUser(user)
-    // .done(() => {
-    //   onClickAddButton();
-    //   uploadAfterCreate(user);
-    // })
-    // .fail((jqXHR) => {
-    //   const error = jqXHR.responseJSON;
-    //   this.setState({
-    //     errors: error,
-    //   });
-    // });
   }
 
   onInputChange(event) {
@@ -61,18 +42,15 @@ class AddNew extends Component {
     });
   }
 
-  hideModal() {
-    this.setState({
-      errors: null,
-    });
+  onClickCancelButton () {
+    const { dispatch } = this.props;
+    dispatch(actions.hideAddNew());
   }
 
   render() {
-    const {onClickCancelButton} = this.props;
-    const {user, errors} = this.state;
+    const {user} = this.state;
     return (
       <div>
-        { errors && <Modal error={errors} onClick={this.hideModal} /> }
         <div className="add-new-form">
           <div className={`input-wrapper ${user.first_name ? 'not-empty' : ''}`}>
             <input
@@ -122,7 +100,7 @@ class AddNew extends Component {
           >Добавить
           </Button>
           <Button
-            onClick={onClickCancelButton}
+            onClick={this.onClickCancelButton}
             cls={'text'}
           >Отмена
           </Button>
@@ -132,12 +110,7 @@ class AddNew extends Component {
   }
 }
 
-AddNew.propTypes = {
-  onClickCancelButton: PropTypes.func.isRequired,
-};
-
 const mapStateToProps = (state) => {
-  console.log(state)
   return {
     list: state.list
   }
