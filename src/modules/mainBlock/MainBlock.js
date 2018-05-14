@@ -23,10 +23,11 @@ class MainBlock extends Component {
     this.showAddNew = this.showAddNew.bind(this);
     this.showSearch = this.showSearch.bind(this);
     this.getAllUsers = this.getAllUsers.bind(this);
+    this.changePage = this.changePage.bind(this);
   }
 
   showAddNew () {
-    const { dispatch, list } = this.props;
+    const { dispatch } = this.props;
     dispatch(actions.showAddNew());
   }
 
@@ -58,7 +59,7 @@ class MainBlock extends Component {
   }
 
   render() {
-    const { list: { users, total_count, isAddNew, isSearch, errors, showModal } } = this.props;
+    const { list: { users, total_count, errors }, ui: { isAddNew, isSearch, showModal } } = this.props;
     const { activePage } = this.state;
 
     return (
@@ -102,6 +103,7 @@ class MainBlock extends Component {
 const mapStateToProps = (state) => {
   return {
     list: state.list,
+    ui: state.ui,
   }
 };
 

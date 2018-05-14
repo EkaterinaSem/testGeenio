@@ -3,9 +3,6 @@ import * as ACTIONS from 'constants/actions';
 const initialState = {
   users: [],
   total_count: 0,
-  isAddNew: false,
-  isSearch: false,
-  showModal: false,
   errors: {}
 };
 
@@ -16,7 +13,7 @@ const list = (state = initialState, action) => {
     case ACTIONS.REQUEST_USER_CREATE_SUCCESS:
       const copyUsers = [...state.users];
       copyUsers.push(action.payload.user);
-      return {...state, isAddNew: false, users: copyUsers, total_count: copyUsers.length};
+      return {...state, users: copyUsers, total_count: copyUsers.length};
     case ACTIONS.REQUEST_USER_SEARCH_SUCCESS:
       return {...state,
         users: action.payload.users,
@@ -44,18 +41,6 @@ const list = (state = initialState, action) => {
     case ACTIONS.REQUEST_USER_DELETE_FAIL:
     case ACTIONS.REQUEST_USER_EDIT_FAIL:
       return {...state, errors: action.payload.errors, showModal: true};
-    case ACTIONS.SHOW_ADD_NEW:
-      return {...state, isAddNew: true, isSearch: false};
-    case ACTIONS.HIDE_ADD_NEW:
-      return {...state, isAddNew: false};
-    case ACTIONS.SHOW_SEARCH:
-      return {...state, isAddNew: false, isSearch: true};
-    case ACTIONS.HIDE_SEARCH:
-      return {...state, isSearch: false};
-    case ACTIONS.SHOW_MODAL:
-      return {...state, showModal: true};
-    case ACTIONS.HIDE_MODAL:
-      return {...state, showModal: false, errors: {}};
     default:
       return state;
   }

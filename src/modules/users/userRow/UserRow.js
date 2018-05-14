@@ -9,17 +9,20 @@ import '../users.css';
 
 class UserRow extends Component {
 
-  state = {
-    isEdit: false,
-    user: {
-      id: this.props.user.id,
-      first_name: this.props.user.first_name,
-      last_name: this.props.user.last_name,
-      email: this.props.user.email,
-      phone: this.props.user.phone,
-      about: this.props.user.about,
-    }
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isEdit: false,
+      user: {...this.props.user}
+    };
+
+    this.onInputChange = this.onInputChange.bind(this);
+    this.onCancelEdit = this.onCancelEdit.bind(this);
+    this.onEdit = this.onEdit.bind(this);
+    this.onSave = this.onSave.bind(this);
+    this.onDelete = this.onDelete.bind(this);
+  }
 
   onDelete() {
     const { user: {id}, dispatch } = this.props;
@@ -33,30 +36,10 @@ class UserRow extends Component {
   }
 
   onCancelEdit() {
-     this.setInitialState();
-  }
-
-  setInitialState(nextProps) {
-    if (nextProps) {
-      this.setState({
-        isEdit: false,
-        user: {
-          nextProps,
-        }
-      })
-    } else {
-      this.setState({
-        isEdit: false,
-        user: {
-          id: this.props.user.id,
-          first_name: this.props.user.first_name,
-          last_name: this.props.user.last_name,
-          email: this.props.user.email,
-          phone: this.props.user.phone,
-          about: this.props.user.about,
-        }
-      });
-    }
+    this.setState({
+      isEdit: false,
+      user: {...this.props.user}
+    });
   }
 
   onSave() {
@@ -64,8 +47,6 @@ class UserRow extends Component {
      const {user} = this.state;
     const { dispatch } = this.props;
     dispatch(actions.editUser(user));
-    // api.editUser(user);
-     //this.context.updateAfterEdit(user);
   }
 
   toggleIsEdit() {
@@ -96,41 +77,23 @@ class UserRow extends Component {
 
    return (
      <div className="user-row">
-       <div className="user-data id">
-         <span>{user.id}</span>
-       </div>
-       <div className="user-data first-name">
-        { isEdit ?
-          <input name="first_name" value={user.first_name} onChange={this.onInputChange.bind(this)} /> :
-          <span>{user.first_name}</span> }
-       </div>
-       <div className="user-data last-name">
-        { isEdit ?
-          <input name="last_name" value={user.last_name} onChange={this.onInputChange.bind(this)} /> :
-          <span>{user.last_name}</span> }
-       </div>
-       <div className="user-data email">
-        { isEdit ?
-          <input name="email" value={user.email} onChange={this.onInputChange.bind(this)} /> :
-          <span>{user.email}</span> }
-       </div>
-       <div className="user-data phone">
-        { isEdit ?
-          <input name="phone" value={user.phone} onChange={this.onInputChange.bind(this)} /> :
-          <span>{user.phone}</span> }
-       </div>
-       <div className="user-data about">
-        { isEdit ?
-          <input name="about" value={user.about} onChange={this.onInputChange.bind(this)} /> :
-          <span>{user.about}</span> }
-       </div>
+
+       { (Object.keys(user).map((key) => {
+         return (
+           <div key={key} className={`user-data ${key}`}>
+             { isEdit ?
+               <input name={key} value={user[key]} onChange={this.onInputChange} /> :
+               <span>{user[key]}</span> }
+           </div>
+         )
+       })) }
        <div className="user-data buttons">
          { isEdit ?
-          <Button customClass="cancel" onClick={this.onCancelEdit.bind(this)} /> :
-          <Button customClass="edit" onClick={this.onEdit.bind(this)} /> }
+          <Button customClass="cancel" onClick={this.onCancelEdit} /> :
+          <Button customClass="edit" onClick={this.onEdit} /> }
          { isEdit ?
-          <Button customClass="save" onClick={this.onSave.bind(this)} /> :
-          <Button customClass="delete" onClick={this.onDelete.bind(this)} /> }
+          <Button customClass="save" onClick={this.onSave} /> :
+          <Button customClass="delete" onClick={this.onDelete} /> }
        </div>
      </div>
     );

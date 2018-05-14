@@ -40,31 +40,29 @@ class Search extends Component {
   render() {
     const { search_field } = this.state;
 
-    return (
-      <div>
-        <div className="search-form">
-          <div className={`input-wrapper ${search_field && 'not-empty'}`}>
-            <input
-              name="search_field"
-              maxLength={255}
-              onChange={this.onInputChange}
-            />
-            <div className="placeholder search-field">Кого ищем?</div>
-          </div>
-      </div>
-        <div className="button-wrapper">
-          <Button
-            onClick={this.searchUser}
-          >Искать
-          </Button>
-          <Button
-            onClick={this.onClickCancelButton}
-            cls={'text'}
-          >Отмена
-          </Button>
+    return [
+      <div key={1} className="search-form">
+        <div className={`input-wrapper ${search_field && 'not-empty'}`}>
+          <input
+            name="search_field"
+            maxLength={255}
+            onChange={this.onInputChange}
+          />
+          <div className="placeholder search-field">Кого ищем?</div>
         </div>
+      </div>,
+      <div key={2} className="button-wrapper">
+        <Button
+        onClick={this.searchUser}
+      >Искать
+        </Button>
+        <Button
+          onClick={this.onClickCancelButton}
+          cls={'text'}
+        >Отмена
+        </Button>
       </div>
-    );
+    ];
   }
 }
 

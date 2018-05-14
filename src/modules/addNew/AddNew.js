@@ -30,6 +30,7 @@ class AddNew extends Component {
     const { dispatch } = this.props;
     dispatch(actions.getAllUsers());
     dispatch(actions.createUser(user));
+    dispatch(actions.hideAddNew());
   }
 
   onInputChange(event) {
@@ -112,7 +113,8 @@ class AddNew extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    list: state.list
+    list: state.list,
+    ui: state.ui,
   }
 };
 
