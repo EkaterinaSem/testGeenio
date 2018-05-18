@@ -1,37 +1,29 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import Button from 'modules/button/Button';
-import * as actions from 'actions';
 
 import './modal.css';
 
 class Modal extends Component {
 
-  onClick () {
-    const { dispatch } = this.props;
-    dispatch(actions.hideModal());
-  }
-
   render() {
-    const { errors } = this.props;
+    const { error, onModalClick } = this.props;
     return (
-      <div className="modal-container" onClick={this.onClick.bind(this)}>
+      <div className="modal-container" onClick={onModalClick}>
         <div className="modal-wrapper">
           <div className="modal-content">
-            {errors.error}
+            {error}
           </div>
-          <Button customClass="text" onClick={this.onClick.bind(this)}>OK</Button>
+          <Button customClass="text" onClick={onModalClick}>OK</Button>
         </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    errors: state.list.errors
-  }
+Modal.propTypes = {
+  error: PropTypes.string.isRequired,
 };
 
-export default connect(mapStateToProps)(Modal);
+export default Modal;

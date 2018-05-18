@@ -23,7 +23,7 @@ export const getAllUsers = (offset) => {
 };
 
 
-export const createUser = (data) => {
+export const createUser = (data, successCallback = () => {}) => {
   return (dispatch) => {
     api.createUser(data)
       .then((user) => {
@@ -33,6 +33,7 @@ export const createUser = (data) => {
             user: user
           }
         });
+        successCallback();
       })
       .catch((error) => {
         dispatch({
@@ -121,10 +122,10 @@ export const hideSearch = () => {
   }
 };
 
-export const hideModal = () => {
+export const clearErrors = () => {
   return (dispatch) => {
     dispatch({
-      type: ACTIONS.HIDE_MODAL,
+      type: ACTIONS.CLEAR_ERRORS,
     });
   }
 };

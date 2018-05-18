@@ -17,10 +17,6 @@ const ui = (state = initialState, action) => {
       return {...state, isAddNew: false, isSearch: true};
     case ACTIONS.HIDE_SEARCH:
       return {...state, isSearch: false};
-    case ACTIONS.SHOW_MODAL:
-      return {...state, showModal: true};
-    case ACTIONS.HIDE_MODAL:
-      return {...state, showModal: false, errors: {}};
     default:
       return state;
   }

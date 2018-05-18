@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import Button from 'modules/button/Button';
-import * as actions from 'actions';
 
 import './search.css';
 
@@ -14,15 +14,8 @@ class Search extends Component {
       search_field: null,
     };
 
-    this.searchUser = this.searchUser.bind(this);
+    //this.onClick = this.onClick.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
-    this.onClickCancelButton = this.onClickCancelButton.bind(this);
-  }
-
-  searchUser() {
-    const {search_field} = this.state;
-    const { dispatch } = this.props;
-    dispatch(actions.searchUser(search_field));
   }
 
   onInputChange(event) {
@@ -31,15 +24,16 @@ class Search extends Component {
     });
   }
 
-  onClickCancelButton () {
-    const { dispatch } = this.props;
-    dispatch(actions.hideSearch());
-    dispatch(actions.getAllUsers());
-  }
+  // onClick () {
+  //   const { search_field } = this.state;
+  //   const { onSearchClick } = this.props;
+  //   onSearchClick(search_field);
+  // }
 
   render() {
     const { search_field } = this.state;
-
+    const { onSearchClick, onCancelClick } = this.props;
+    console.log(onSearchClick, onCancelClick)
     return [
       <div key={1} className="search-form">
         <div className={`input-wrapper ${search_field && 'not-empty'}`}>
@@ -53,11 +47,11 @@ class Search extends Component {
       </div>,
       <div key={2} className="button-wrapper">
         <Button
-        onClick={this.searchUser}
+        onClick={onSearchClick(search_field)}
       >Искать
         </Button>
         <Button
-          onClick={this.onClickCancelButton}
+          onClick={onCancelClick}
           cls={'text'}
         >Отмена
         </Button>
@@ -66,10 +60,9 @@ class Search extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    list: state.list
-  }
+Search.propTypes = {
+  onSearchClick: PropTypes.func.isRequired,
+  onCancelClick: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(Search);
+export default connect()(Search);

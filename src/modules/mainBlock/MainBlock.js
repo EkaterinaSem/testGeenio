@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import Modal from "modules/modal/Modal";
 import Button from 'modules/button/Button';
 import List from 'modules/list/List';
-import AddNew from 'modules/addNew/AddNew';
-import Search from 'modules/search/Search';
+import AddNewContainer from 'containers/addNewContainer';
+import SearchContainer from 'containers/searchContainer';
 import * as actions from 'actions';
 
 import './mainBlock.css';
@@ -24,6 +24,7 @@ class MainBlock extends Component {
     this.showSearch = this.showSearch.bind(this);
     this.getAllUsers = this.getAllUsers.bind(this);
     this.changePage = this.changePage.bind(this);
+    this.onModalClick = this.onModalClick.bind(this);
   }
 
   showAddNew () {
@@ -58,13 +59,17 @@ class MainBlock extends Component {
     this.getAllUsers(offset);
   }
 
-  render() {
-    const { list: { users, total_count, errors }, ui: { isAddNew, isSearch, showModal } } = this.props;
-    const { activePage } = this.state;
+  onModalClick () {
+    const { dispatch } = this.props;
+    dispatch(actions.clearErrors());
+  }
 
+  render() {
+    const { list: { users, total_count, errors }, ui: { isAddNew, isSearch } } = this.props;
+    const { activePage } = this.state;
     return (
       <div className="main">
-        { showModal && <Modal error={errors} /> }
+        { errors.error && <Modal error={errors.error} onModalClick={this.onModalClick}/> }
         <div className="head-wrapper">
           <div className="button-wrapper">
             <Button
@@ -80,8 +85,8 @@ class MainBlock extends Component {
               {'Найти пользователя'}
             </Button>
           </div>
-          {isAddNew && <AddNew />}
-          {isSearch && <Search />}
+          {isAddNew && <AddNewContainer offset={activePage} />}
+          {isSearch && <SearchContainer />}
         </div>
         <List users={users}/>
         <Pagination

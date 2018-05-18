@@ -17,5 +17,4 @@ export const SHOW_ADD_NEW = 'SHOW_ADD_NEW';
 export const HIDE_ADD_NEW = 'HIDE_ADD_NEW';
 export const SHOW_SEARCH = 'SHOW_SEARCH';
 export const HIDE_SEARCH = 'HIDE_SEARCH';
-export const SHOW_MODAL = 'SHOW_MODAL';
-export const HIDE_MODAL = 'HIDE_MODAL';
+export const CLEAR_ERRORS = 'CLEAR_ERRORS';

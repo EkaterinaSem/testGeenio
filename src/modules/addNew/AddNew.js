@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Button from 'modules/button/Button';
-import * as actions from 'actions';
 
 import './addNew.css';
 
@@ -20,17 +19,15 @@ class AddNew extends Component {
       }
     };
 
-    this.onClickAddNew = this.onClickAddNew.bind(this);
+    this.onClick = this.onClick.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
-    this.onClickCancelButton = this.onClickCancelButton.bind(this);
+    this.renderForm = this.renderForm.bind(this);
   }
 
-  onClickAddNew() {
-    const {user} = this.state;
-    const { dispatch } = this.props;
-    dispatch(actions.getAllUsers());
-    dispatch(actions.createUser(user));
-    dispatch(actions.hideAddNew());
+  onClick() {
+    const { user } = this.state;
+    const { onClickAddNew } = this.props;
+    onClickAddNew(user);
   }
 
   onInputChange(event) {
@@ -43,65 +40,50 @@ class AddNew extends Component {
     });
   }
 
-  onClickCancelButton () {
-    const { dispatch } = this.props;
-    dispatch(actions.hideAddNew());
-  }
-
-  render() {
-    const {user} = this.state;
-    return (
-      <div>
-        <div className="add-new-form">
-          <div className={`input-wrapper ${user.first_name ? 'not-empty' : ''}`}>
+  renderForm () {
+    const { user } = this.state;
+    const form = Object.keys(user).map((key) => {
+      if (key !== 'about') {
+        return (
+          <div key={key} className={`input-wrapper ${user[key] ? 'not-empty' : ''}`}>
             <input
-              name="first_name"
+              name={key}
               maxLength={255}
               onChange={this.onInputChange}
             />
-            <div className="placeholder new-name">Имя</div>
+            <div className="placeholder new-name">{key}</div>
           </div>
-          <div className={`input-wrapper ${user.last_name ? 'not-empty' : ''}`}>
-            <input
-              name="last_name"
-              maxLength={255}
-              onChange={this.onInputChange}
-            />
-            <div className="placeholder new-last-name">Фамилия</div>
-          </div>
-          <div className={`input-wrapper ${user.email ? 'not-empty' : ''}`}>
-            <input
-              name="email"
-              maxLength={255}
-              onChange={this.onInputChange}
-            />
-            <div className="placeholder new-email">E-mail</div>
-          </div>
-          <div className={`input-wrapper ${user.phone ? 'not-empty' : ''}`}>
-            <input
-              name="phone"
-              type='number'
-              maxLength={255}
-              onChange={this.onInputChange}
-            />
-            <div className="placeholder new-phone">Номер телефона</div>
-          </div>
-          <div className="input-wrapper">
-            <div className="new-about">Прочее</div>
+        )
+      } else {
+        return (
+          <div key={key} className="input-wrapper">
+            <div className="new-about">about</div>
             <textarea
               name="about"
               maxLength={1000}
               onChange={this.onInputChange}
             />
           </div>
+        )
+      }
+    });
+    return form;
+  }
+
+  render() {
+    const { onClickCancelButton } = this.props;
+    return (
+      <div>
+        <div className="add-new-form">
+          {this.renderForm()}
         </div>
         <div className="button-wrapper">
           <Button
-            onClick={this.onClickAddNew}
+            onClick={this.onClick}
           >Добавить
           </Button>
           <Button
-            onClick={this.onClickCancelButton}
+            onClick={onClickCancelButton}
             cls={'text'}
           >Отмена
           </Button>

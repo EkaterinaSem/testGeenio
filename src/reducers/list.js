@@ -13,7 +13,7 @@ const list = (state = initialState, action) => {
     case ACTIONS.REQUEST_USER_CREATE_SUCCESS:
       const copyUsers = [...state.users];
       copyUsers.push(action.payload.user);
-      return {...state, users: copyUsers, total_count: copyUsers.length};
+      return {...state, users: copyUsers, total_count: state.total_count++};
     case ACTIONS.REQUEST_USER_SEARCH_SUCCESS:
       return {...state,
         users: action.payload.users,
@@ -26,6 +26,7 @@ const list = (state = initialState, action) => {
       });
       return {...state,
         users: usersAfterDelete,
+        total_count: state.total_count--,
       };
     case ACTIONS.REQUEST_USER_EDIT_SUCCESS:
       let usersAfterEdit = [...state.users];
@@ -40,7 +41,9 @@ const list = (state = initialState, action) => {
     case ACTIONS.REQUEST_USER_CREATE_FAIL:
     case ACTIONS.REQUEST_USER_DELETE_FAIL:
     case ACTIONS.REQUEST_USER_EDIT_FAIL:
-      return {...state, errors: action.payload.errors, showModal: true};
+      return {...state, errors: action.payload.errors};
+    case ACTIONS.CLEAR_ERRORS:
+      return {...state, errors: {}};
     default:
       return state;
   }
