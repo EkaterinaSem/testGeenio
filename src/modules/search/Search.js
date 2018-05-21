@@ -14,7 +14,7 @@ class Search extends Component {
       search_field: null,
     };
 
-    //this.onClick = this.onClick.bind(this);
+    this.onSearchClick = this.onSearchClick.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
   }
 
@@ -24,11 +24,11 @@ class Search extends Component {
     });
   }
 
-  // onClick () {
-  //   const { search_field } = this.state;
-  //   const { onSearchClick } = this.props;
-  //   onSearchClick(search_field);
-  // }
+  onSearchClick () {
+    const { search_field } = this.state;
+    const { onSearchClick } = this.props;
+    onSearchClick(search_field);
+  }
 
   render() {
     const { search_field } = this.state;
@@ -47,7 +47,7 @@ class Search extends Component {
       </div>,
       <div key={2} className="button-wrapper">
         <Button
-        onClick={onSearchClick(search_field)}
+        onClick={this.onSearchClick}
       >Искать
         </Button>
         <Button

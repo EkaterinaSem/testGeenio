@@ -23,26 +23,50 @@ export const getAllUsers = (offset) => {
 };
 
 
+function dataFormatted(data) {
+  const newData = {...data};
+  newData.first_name = data.first_name + Date.now();
+  newData.last_name = data.last_name + Date.now();
+  newData.email = data.email + Date.now();
+  newData.phone = data.phone + Date.now();
+  return newData;
+}
+
+
+function requestInterval(count, timeout, func) {
+  let currentIteration = 0;
+  const intervalId = setInterval(() => {
+    func();
+    currentIteration++;
+    if(currentIteration >= count) {
+      clearInterval(intervalId);
+    }
+  }, timeout)
+}
+
+
 export const createUser = (data, successCallback = () => {}) => {
   return (dispatch) => {
-    api.createUser(data)
-      .then((user) => {
-        dispatch({
-          type: ACTIONS.REQUEST_USER_CREATE_SUCCESS,
-          payload: {
-            user: user
-          }
-        });
-        successCallback();
-      })
-      .catch((error) => {
-        dispatch({
-          type: ACTIONS.REQUEST_USER_CREATE_FAIL,
-          payload: {
-            errors: error.responseJSON
-          }
-        });
-      })
+    requestInterval(10, 1000, () => {
+      api.createUser(dataFormatted(data))
+        .then((user) => {
+          dispatch({
+            type: ACTIONS.REQUEST_USER_CREATE_SUCCESS,
+            payload: {
+              user: user
+            }
+          });
+          successCallback();
+        })
+        .catch((error) => {
+          dispatch({
+            type: ACTIONS.REQUEST_USER_CREATE_FAIL,
+            payload: {
+              errors: error.responseJSON
+            }
+          });
+        })
+    });
   }
 };
 

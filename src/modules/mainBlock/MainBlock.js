@@ -95,9 +95,7 @@ class MainBlock extends Component {
           itemsCountPerPage={10}
           totalItemsCount={total_count}
           pageRangeDisplayed={5}
-          onChange={(offset) => {
-            this.changePage.call(this, offset);
-          }}
+          onChange={this.changePage}
         />
       </div>
     );
